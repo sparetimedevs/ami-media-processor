@@ -18,9 +18,8 @@ package com.sparetimedevs.ami.mediaprocessor
 
 import cats.data.EitherT
 import cats.effect.IO
+import cats.effect.unsafe.IORuntime
 
-import scala.concurrent.ExecutionContext
-
-private[mediaprocessor] type IOEitherErrorsOr[T] = ExecutionContext ?=> EitherT[IO, Errors, T]
+private[mediaprocessor] type IOEitherErrorsOr[T] = IORuntime ?=> EitherT[IO, Errors, T]
 
 extension [T](ioEitherErrorsOrT: IO[Either[Errors, T]]) private[mediaprocessor] def asIOEitherErrorsOrT: IOEitherErrorsOr[T] = EitherT(ioEitherErrorsOrT)

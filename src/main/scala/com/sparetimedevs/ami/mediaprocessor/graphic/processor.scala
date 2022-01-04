@@ -17,20 +17,17 @@
 package com.sparetimedevs.ami.mediaprocessor.graphic
 
 import cats.data.EitherT
-import cats.effect.{ContextShift, IO}
+import cats.effect.IO
+import cats.effect.implicits.*
 import cats.implicits.*
-import cats.syntax.parallel.catsSyntaxParallelTraverse1
 import com.sparetimedevs.ami.core.*
 import com.sparetimedevs.ami.mediaprocessor.*
 import doodle.core.{Color, *}
 import doodle.image.*
 
 import scala.annotation.tailrec
-import scala.concurrent.ExecutionContext
 
 private[mediaprocessor] def createImagesForParts(measuresForParts: Map[String, Seq[Measure]]): IOEitherErrorsOr[Map[String, Image]] =
-  val context = summon[ExecutionContext]
-  implicit val contextShift: ContextShift[IO] = IO.contextShift(context)
   measuresForParts
     .parUnorderedTraverse { measures => createImage(measures: Seq[Measure]).value }
     .map { (map: Map[String, Either[Errors, Image]]) =>
@@ -45,12 +42,8 @@ private[mediaprocessor] def createImage(measures: Seq[Measure]): IOEitherErrorsO
     .map((imagesPerRow: Seq[Image]) => createOneImage(imagesPerRow))
 }
 
-private[mediaprocessor] def createImages(measures: Seq[Measure]): IOEitherErrorsOr[Seq[Image]] = {
-  val context = summon[ExecutionContext]
-  implicit val contextShift: ContextShift[IO] = IO.contextShift(context)
-
+private[mediaprocessor] def createImages(measures: Seq[Measure]): IOEitherErrorsOr[Seq[Image]] =
   measures.parTraverse((measure: Measure) => EitherT(IO.pure(createImage(measure))))
-}
 
 private[mediaprocessor] def createImage(measure: Measure): Either[Errors, Image] = {
   val measureImage: Image = Image.rectangle(598.0, 298.0).strokeColor(Color.lightGray).strokeWidth(2.0)

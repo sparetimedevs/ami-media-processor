@@ -16,17 +16,16 @@
 
 package com.sparetimedevs.ami.mediaprocessor.graphic
 
+import cats.effect.unsafe.IORuntime
 import com.sparetimedevs.ami.core.{Duration, Measure, Note, NoteType, Pitch, Step}
 import doodle.image.Image
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import test.getRightResultForTest
 
-import scala.concurrent.ExecutionContext
-
 class GraphicsForPartsTest extends AnyFlatSpec with Matchers {
 
-  private given executionContext: ExecutionContext = ExecutionContext.global
+  private given runtime: IORuntime = cats.effect.unsafe.IORuntime.global
 
   it should "create images for parts" in {
     val measuresForParts = Map(

@@ -16,13 +16,13 @@
 
 package com.sparetimedevs.ami
 
+import cats.effect.unsafe.IORuntime
 import cats.effect.{ExitCode, IO, IOApp}
 import com.sparetimedevs.ami.mediaprocessor.file.Format
 import com.sparetimedevs.ami.mediaprocessor.{Errors, MediaProcessorImpl}
 
 import java.io.{File, InputStream}
 import java.nio.file.{Files, Paths}
-import scala.concurrent.ExecutionContext
 
 /**
  * The Ami Media Processor Test Application entry point.
@@ -35,7 +35,7 @@ object AmiMediaProcessorTestApplication extends IOApp {
   private val xmlPath = "src/test/resources/lilypond_2_20_regression_musicxml/21a-Chord-Basic.xml"
   private val xsdPath = "src/main/resources/musicxml_3_1/schema/musicxml.xsd"
 
-  private given implicitExecutionContext: ExecutionContext = executionContext
+  private given implicitRuntime: IORuntime = this.runtime
 
   private val musicXmlData: Array[Byte] = Files.readAllBytes(Paths.get(xmlPath))
 
@@ -43,7 +43,7 @@ object AmiMediaProcessorTestApplication extends IOApp {
 
   override def run(args: List[String]): IO[ExitCode] =
     mediaProcessor
-      .createImages(musicXmlData, Format.Png, implicitExecutionContext)
+      .createImages(musicXmlData, Format.Png)
       .map { either =>
         either.fold(
           { (errors: Errors) =>

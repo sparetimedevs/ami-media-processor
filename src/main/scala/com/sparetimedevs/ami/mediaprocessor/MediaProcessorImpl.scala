@@ -17,7 +17,8 @@
 package com.sparetimedevs.ami.mediaprocessor
 
 import cats.data.EitherT
-import cats.effect.{ContextShift, IO}
+import cats.effect.IO
+import cats.effect.unsafe.IORuntime
 import com.sparetimedevs.ami.MediaProcessor
 import com.sparetimedevs.ami.core.{Measure, Part, ScorePartwise}
 import com.sparetimedevs.ami.mediaprocessor.file.{Format, read}
@@ -29,26 +30,24 @@ import doodle.effect.Writer.*
 import doodle.image.Image
 import doodle.java2d.*
 import doodle.language.Basic
-import doodle.syntax.*
+import doodle.syntax.all.*
 import org.apache.commons.io.FileUtils
 
 import java.io.File
 import java.nio.file.{Files, Paths}
-import scala.concurrent.ExecutionContext
 import scala.util.Try
 
 class MediaProcessorImpl extends MediaProcessor {
 
   private val xsdPath = "src/main/resources/musicxml_3_1/schema/musicxml.xsd"
 
-  override def createImages(musicXmlData: Array[Byte], outputFileFormat: Format, executionContext: ExecutionContext): IO[Either[Errors, Map[String, Array[Byte]]]] =
-    implicit val ec: ExecutionContext = executionContext
+  override def createImages(musicXmlData: Array[Byte], outputFileFormat: Format)(implicit runtime: IORuntime): IO[Either[Errors, Map[String, Array[Byte]]]] =
     read(musicXmlData, xsdPath)
       .map { (s: ScorePartwise) => getMeasures(s) }
       .flatMap { (measuresForParts: Map[String, Seq[Measure]]) =>
         createImagesForParts(measuresForParts)
       }
-      .subflatMap { (imagesForParts: Map[String, Image]) =>
+      .flatMap { (imagesForParts: Map[String, Image]) =>
         imagesToBase64s(imagesForParts, outputFileFormat)
       }
       .map { (base64EncodedImagesForParts: Map[String, String]) =>
@@ -59,18 +58,20 @@ class MediaProcessorImpl extends MediaProcessor {
   private def getMeasures(scorePartwise: ScorePartwise): Map[String, Seq[Measure]] =
     scorePartwise.parts.map((part: Part) => { part.id -> part.measures }).toMap
 
-  private def imagesToBase64s(imagesForParts: Map[String, Image], outputFileFormat: Format): Either[Errors, Map[String, String]] =
-    imagesForParts.map { (partId: String, image: Image) =>
-      val picture: Picture[Unit] = image.toPicture
-      val base64EncodedStringOrError: Either[Errors, String] = outputFileFormat match {
-        case Format.Svg =>
-          Left(ValidationError("SVG is not supported.").asOnlyError)
-        case Format.Png =>
-          val (result, b64: Base64[Png]) = picture.base64[Png]()
-          Right(b64.value)
-      }
-      (partId, base64EncodedStringOrError)
-    }.toEitherErrorsOrMap
+  private def imagesToBase64s(imagesForParts: Map[String, Image], outputFileFormat: Format): IOEitherErrorsOr[Map[String, String]] =
+    IO {
+      imagesForParts.map { (partId: String, image: Image) =>
+        val picture: Picture[Unit] = image.toPicture
+        val base64EncodedStringOrError: Either[Errors, String] = outputFileFormat match {
+          case Format.Svg =>
+            Left(ValidationError("SVG is not supported.").asOnlyError)
+          case Format.Png =>
+            val (result, b64: Base64[Png]) = picture.base64[Png]()
+            Right(b64.value)
+        }
+        (partId, base64EncodedStringOrError)
+      }.toEitherErrorsOrMap
+    }.asIOEitherErrorsOrT
 
   private def base64sToByteArrays(base64EncodedImagesForParts: Map[String, String]): Map[String, Array[Byte]] = {
     base64EncodedImagesForParts.map { (partId: String, base64EncodedString: String) =>

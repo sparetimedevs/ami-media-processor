@@ -17,14 +17,14 @@
 package com.sparetimedevs.ami
 
 import cats.effect.IO
+import cats.effect.unsafe.IORuntime
 import com.sparetimedevs.ami.mediaprocessor.Errors
 import com.sparetimedevs.ami.mediaprocessor.file.Format
 
 import java.io.File
-import scala.concurrent.ExecutionContext
 
 trait MediaProcessor {
 
-  def createImages(musicXmlData: Array[Byte], outputFileFormat: Format, executionContext: ExecutionContext): IO[Either[Errors, Map[String, Array[Byte]]]]
+  def createImages(musicXmlData: Array[Byte], outputFileFormat: Format)(implicit runtime: IORuntime): IO[Either[Errors, Map[String, Array[Byte]]]]
 
 }
