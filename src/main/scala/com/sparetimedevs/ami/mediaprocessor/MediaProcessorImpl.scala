@@ -18,7 +18,8 @@ package com.sparetimedevs.ami.mediaprocessor
 
 import cats.data.EitherT
 import cats.effect.IO
-import cats.effect.unsafe.IORuntime
+import cats.effect.implicits.*
+import cats.implicits.*
 import com.sparetimedevs.ami.MediaProcessor
 import com.sparetimedevs.ami.core.{Measure, Part, ScorePartwise}
 import com.sparetimedevs.ami.mediaprocessor.file.{Format, read}
@@ -41,7 +42,7 @@ class MediaProcessorImpl extends MediaProcessor {
 
   private val xsdPath = "src/main/resources/musicxml_3_1/schema/musicxml.xsd"
 
-  override def createImages(musicXmlData: Array[Byte], outputFileFormat: Format)(implicit runtime: IORuntime): IO[Either[Errors, Map[String, Array[Byte]]]] =
+  override def createImages(musicXmlData: Array[Byte], outputFileFormat: Format): IO[Either[Errors, Map[String, Array[Byte]]]] =
     read(musicXmlData, xsdPath)
       .map { (s: ScorePartwise) => getMeasures(s) }
       .flatMap { (measuresForParts: Map[String, Seq[Measure]]) =>
@@ -59,19 +60,21 @@ class MediaProcessorImpl extends MediaProcessor {
     scorePartwise.parts.map((part: Part) => { part.id -> part.measures }).toMap
 
   private def imagesToBase64s(imagesForParts: Map[String, Image], outputFileFormat: Format): IOEitherErrorsOr[Map[String, String]] =
-    IO {
-      imagesForParts.map { (partId: String, image: Image) =>
+    imagesForParts
+      .map { (partId: String, image: Image) =>
         val picture: Picture[Unit] = image.toPicture
-        val base64EncodedStringOrError: Either[Errors, String] = outputFileFormat match {
+        val base64EncodedStringOrError: IO[Either[Errors, String]] = outputFileFormat match {
           case Format.Svg =>
-            Left(ValidationError("SVG is not supported.").asOnlyError)
+            IO.pure(Left(ValidationError("SVG is not supported.").asOnlyError))
           case Format.Png =>
-            val (result, b64: Base64[Png]) = picture.base64[Png]()
-            Right(b64.value)
+            val io: IO[(Unit, Base64[Png])] = picture.base64ToIO[Png]()
+            io.map { (result, b64: Base64[Png]) => Right(b64.value) }
         }
         (partId, base64EncodedStringOrError)
-      }.toEitherErrorsOrMap
-    }.asIOEitherErrorsOrT
+      }
+      .parUnorderedSequence
+      .map { (a: Map[String, Either[Errors, String]]) => a.toEitherErrorsOrMap }
+      .asIOEitherErrorsOrT
 
   private def base64sToByteArrays(base64EncodedImagesForParts: Map[String, String]): Map[String, Array[Byte]] = {
     base64EncodedImagesForParts.map { (partId: String, base64EncodedString: String) =>
