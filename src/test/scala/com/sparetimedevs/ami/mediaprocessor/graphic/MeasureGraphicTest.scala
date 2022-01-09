@@ -17,6 +17,7 @@
 package com.sparetimedevs.ami.mediaprocessor.graphic
 
 import cats.Eval
+import cats.effect.unsafe.IORuntime
 import com.sparetimedevs.ami.core.{Measure, MusicComponent}
 import com.sparetimedevs.ami.mediaprocessor.test.getBoundingBox
 import doodle.algebra.generic.{ContextTransform, Renderable}
@@ -31,7 +32,7 @@ import doodle.java2d.algebra.reified.Reification
 import doodle.java2d.effect.Java2d
 import doodle.java2d.{Drawing, Frame}
 import doodle.language.Basic
-import doodle.syntax.circle
+import doodle.syntax.all.circle
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import test.getRightResultForTest
@@ -40,11 +41,10 @@ import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 import java.io.File
 import java.text.Format
-import scala.concurrent.ExecutionContext
 
 class MeasureGraphicTest extends AnyFlatSpec with Matchers {
 
-  private given executionContext: ExecutionContext = ExecutionContext.global
+  private given runtime: IORuntime = cats.effect.unsafe.IORuntime.global
 
   it should "create one image with the right dimensions for one measure" in {
     val musicData: Seq[MusicComponent] = Nil

@@ -18,9 +18,12 @@ package test
 
 import cats.data.EitherT
 import cats.effect.IO
+import cats.effect.unsafe.IORuntime
 
-extension [A, B](e: EitherT[IO, A, B]) def getRightResultForTest: B = e.value.unsafeRunSync().getOrElse(throw new RuntimeException("Test case should yield a Right!"))
-extension [A, B](e: EitherT[IO, A, B]) def getLeftResultForTest: A = e.value.unsafeRunSync().swap.getOrElse(throw new RuntimeException("Test case should yield a Left!"))
+private val runtime: IORuntime = cats.effect.unsafe.IORuntime.global
+
+extension [A, B](e: EitherT[IO, A, B]) def getRightResultForTest: B = e.value.unsafeRunSync()(runtime).getOrElse(throw new RuntimeException("Test case should yield a Right!"))
+extension [A, B](e: EitherT[IO, A, B]) def getLeftResultForTest: A = e.value.unsafeRunSync()(runtime).swap.getOrElse(throw new RuntimeException("Test case should yield a Left!"))
 
 extension [A, B](either: Either[A, B]) def getRightResultForTest: B = either.getOrElse(throw new RuntimeException("Test case should yield a Right!"))
 extension [A, B](either: Either[A, B]) def getLeftResultForTest: A = either.swap.getOrElse(throw new RuntimeException("Test case should yield a Left!"))

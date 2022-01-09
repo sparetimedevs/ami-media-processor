@@ -16,6 +16,7 @@
 
 package componenttest.graphicnotation
 
+import cats.effect.unsafe.IORuntime
 import com.commodityvectors.snapshotmatchers.{SnapshotAssertion, SnapshotFilename, SnapshotMatcher}
 import com.sparetimedevs.ami.core.{Measure, Part, ScorePartwise}
 import com.sparetimedevs.ami.mediaprocessor.{Errors, MediaProcessorImpl}
@@ -27,18 +28,17 @@ import org.scalatest.BeforeAndAfterEach
 
 import java.io.File
 import java.nio.file.{Files, Paths}
-import scala.concurrent.ExecutionContext
 import scala.util.Try
 
 abstract class GraphicNotationComponentSpec extends ComponentSpec {
 
   private val mediaProcessor: MediaProcessor = new MediaProcessorImpl()
-  private val executionContext: ExecutionContext = ExecutionContext.global
+  private given runtime: IORuntime = cats.effect.unsafe.IORuntime.global
 
   def createImages(xmlPath: String, outputFileFormat: Format): Either[Errors, List[String]] =
     val musicXmlData: Array[Byte] = Files.readAllBytes(Paths.get(xmlPath))
     mediaProcessor
-      .createImages(musicXmlData, outputFileFormat, executionContext)
+      .createImages(musicXmlData, outputFileFormat)
       .unsafeRunSync()
       .map { (images: Map[String, Array[Byte]]) =>
         images.map { (partId: String, imageData: Array[Byte]) =>

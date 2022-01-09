@@ -16,6 +16,7 @@
 
 package com.sparetimedevs.ami.mediaprocessor.file
 
+import cats.effect.unsafe.IORuntime
 import com.sparetimedevs.ami.core.{AttributesType, Measure, NotImplementedMusicComponent, Note, Part, Pitch, Rest, ScorePartwise, Unpitched}
 import doodle.core.*
 import doodle.effect.Writer.*
@@ -27,13 +28,12 @@ import test.getRightResultForTest
 
 import java.io.File
 import java.nio.file.{Files, Paths}
-import scala.concurrent.ExecutionContext
 
 class MusicXmlReaderTests extends AnyFlatSpec {
 
   private val xsdPath = "src/main/resources/musicxml_3_1/schema/musicxml.xsd"
 
-  private given executionContext: ExecutionContext = ExecutionContext.global
+  private given runtime: IORuntime = cats.effect.unsafe.IORuntime.global
 
   it should "work with 0" in {
     val xmlPath = "src/test/resources/lilypond_2_20_regression_musicxml/43a-PianoStaff.xml"
