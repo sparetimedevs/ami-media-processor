@@ -1,13 +1,20 @@
 package scalaxb
 
-import scala.xml.{Node, NodeSeq, NamespaceBinding, Elem, UnprefixedAttribute, PrefixedAttribute}
+import java.util.TimeZone
+import javax.xml.bind.DatatypeConverter
 import javax.xml.datatype.XMLGregorianCalendar
 import javax.xml.namespace.QName
-import javax.xml.bind.DatatypeConverter
+import scala.language.{existentials, implicitConversions, postfixOps, unsafeNulls}
+import scala.xml.{Elem, NamespaceBinding, Node, NodeSeq, PrefixedAttribute, UnprefixedAttribute}
 
-import scala.language.postfixOps
-import scala.language.implicitConversions
-import scala.language.existentials
+/**
+ * Take note of import statement: import scala.language.unsafeNulls
+ *
+ * The code in this file will have a similar semantic as regular Scala, but not
+ * equivalent.
+ *
+ * NullPointerExceptions can occur!
+ */
 
 object `package` {
   import annotation.implicitNotFound
@@ -433,7 +440,7 @@ object DataRecord extends XMLStandardTypes {
       result
     }
   }
-  import Helper._
+  import Helper.*
 
   // this is for nil element.
   def apply(namespace: Option[String], key: Option[String], value: None.type): DataRecord[Option[Nothing]] =
@@ -653,8 +660,8 @@ object ElemName {
 }
 
 trait AnyElemNameParser extends scala.util.parsing.combinator.Parsers {
-  import scala.collection.mutable.ListBuffer
   import scala.annotation.tailrec
+  import scala.collection.mutable.ListBuffer
   type Elem = ElemName
 
   implicit class ReaderExt(reader: scala.util.parsing.input.Reader[ElemName]) {
@@ -821,7 +828,7 @@ trait ElemNameParser[A] extends AnyElemNameParser with XMLFormat[A] with CanWrit
 
 class ElemNameSeqReader(val seq: Seq[ElemName],
     override val offset: Int) extends scala.util.parsing.input.Reader[ElemName] {
-  import scala.util.parsing.input._
+  import scala.util.parsing.input.*
 
   def this(seq: Seq[ElemName]) = this(seq, 0)
 
@@ -911,16 +918,19 @@ object Helper {
       "%s:%s".format(_, value.getLocalPart)} getOrElse {value.getLocalPart}
 
   def toCalendar(value: String): XMLGregorianCalendar = {
-    DataTypeFactory.get().newXMLGregorianCalendar(value)
+    val datatypeFactory: javax.xml.datatype.DatatypeFactory = DataTypeFactory.get()
+    datatypeFactory.newXMLGregorianCalendar(value)
   }
 
   def toCalendar(value: java.util.GregorianCalendar): XMLGregorianCalendar = {
-    import javax.xml.datatype._
-    import java.util.{GregorianCalendar, Calendar => JCalendar}
+    import java.util.{GregorianCalendar, Calendar as JCalendar}
+    import javax.xml.datatype.*
 
-    val xmlGregorian = DataTypeFactory.get().newXMLGregorianCalendar()
-    if (value.getTimeZone != null) {
-      xmlGregorian.setTimezone(value.getTimeZone.getRawOffset / 60000)
+    val datatypeFactory: javax.xml.datatype.DatatypeFactory = DataTypeFactory.get()
+    val xmlGregorian = datatypeFactory.newXMLGregorianCalendar()
+    val timeZone: TimeZone | Null = value.getTimeZone
+    if (timeZone != null) {
+      xmlGregorian.setTimezone(timeZone.getRawOffset / 60000)
     }
 
     if (value.isSet(JCalendar.YEAR)) xmlGregorian.setYear(if (value.get(JCalendar.ERA) == GregorianCalendar.AD) value.get(JCalendar.YEAR) else -value.get(JCalendar.YEAR))
@@ -935,7 +945,8 @@ object Helper {
   }
 
   def toDuration(value: String) = {
-    DataTypeFactory.get().newDuration(value)
+    val datatypeFactory: javax.xml.datatype.DatatypeFactory = DataTypeFactory.get()
+    datatypeFactory.newDuration(value)
   }
 
   def toURI(value: String) =
@@ -1034,7 +1045,7 @@ object Helper {
   }
 
   def resolveSoap11Refs(node: Node): Node = {
-    import scala.xml.transform._
+    import scala.xml.transform.*
 
     def lookupRef(id: String): Seq[Node] =
       node.child flatMap {

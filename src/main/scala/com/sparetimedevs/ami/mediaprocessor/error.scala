@@ -35,3 +35,5 @@ sealed trait MediaProcessorError {
 case class ValidationError(message: String) extends MediaProcessorError
 
 case class XmlParseError(message: String) extends MediaProcessorError
+
+case class DecodeError(message: String) extends MediaProcessorError

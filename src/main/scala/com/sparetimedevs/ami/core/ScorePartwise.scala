@@ -17,13 +17,13 @@
 package com.sparetimedevs.ami.core
 
 case class ScorePartwise(
-  work: Work = null,
-  movementNumber: String = null,
-  movementTitle: String = null,
-  identification: Identification = null,
-  defaults: Defaults = null,
-  credits: Seq[Credit] = null,
-  partList: PartList = null,
+  work: Option[Work] = None,
+  movementNumber: Option[String] = None,
+  movementTitle: Option[String] = None,
+  identification: Option[Identification] = None,
+  defaults: Option[Defaults] = None,
+  credits: Seq[Credit] = Nil,
+  partList: Option[PartList] = None,
   parts: Seq[Part],
-  version: String = null
+  version: Option[String] = None
 )

@@ -24,7 +24,7 @@ import com.sparetimedevs.ami.MediaProcessor
 import com.sparetimedevs.ami.core.{Measure, Part, ScorePartwise}
 import com.sparetimedevs.ami.mediaprocessor.file.{Format, read}
 import com.sparetimedevs.ami.mediaprocessor.graphic.{createImage, createImagesForParts, toPicture}
-import com.sparetimedevs.ami.mediaprocessor.util.toEitherErrorsOrMap
+import com.sparetimedevs.ami.mediaprocessor.util.{base64sToBytes, toEitherErrorsOrMap}
 import com.sparetimedevs.ami.mediaprocessor.{Errors, IOEitherErrorsOr, ValidationError}
 import doodle.core.*
 import doodle.effect.Writer.*
@@ -51,8 +51,8 @@ class MediaProcessorImpl extends MediaProcessor {
       .flatMap { (imagesForParts: Map[String, Image]) =>
         imagesToBase64s(imagesForParts, outputFileFormat)
       }
-      .map { (base64EncodedImagesForParts: Map[String, String]) =>
-        base64sToByteArrays(base64EncodedImagesForParts)
+      .flatMap { (base64EncodedImagesForParts: Map[String, String]) =>
+        base64sToBytes(base64EncodedImagesForParts)
       }
       .value
 
@@ -75,11 +75,4 @@ class MediaProcessorImpl extends MediaProcessor {
       .parUnorderedSequence
       .map { (a: Map[String, Either[Errors, String]]) => a.toEitherErrorsOrMap }
       .asIOEitherErrorsOrT
-
-  private def base64sToByteArrays(base64EncodedImagesForParts: Map[String, String]): Map[String, Array[Byte]] = {
-    base64EncodedImagesForParts.map { (partId: String, base64EncodedString: String) =>
-      val decoded: Array[Byte] = java.util.Base64.getDecoder.decode(base64EncodedString)
-      (partId, decoded)
-    }
-  }
 }

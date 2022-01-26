@@ -18,18 +18,19 @@ package com.sparetimedevs.ami.mediaprocessor.file
 
 import cats.effect.unsafe.IORuntime
 import com.sparetimedevs.ami.core.{AttributesType, Measure, NotImplementedMusicComponent, Note, Part, Pitch, Rest, ScorePartwise, Unpitched}
+import com.sparetimedevs.ami.test.util.getRightResultForTest
 import doodle.core.*
 import doodle.effect.Writer.*
 import doodle.image.*
 import doodle.image.syntax.*
 import doodle.java2d.*
 import org.scalatest.flatspec.AnyFlatSpec
-import test.getRightResultForTest
 
 import java.io.File
 import java.nio.file.{Files, Paths}
+import scala.runtime.Scala3RunTime.nn
 
-class MusicXmlReaderTests extends AnyFlatSpec {
+class MusicXmlReaderTest extends AnyFlatSpec {
 
   private val xsdPath = "src/main/resources/musicxml_3_1/schema/musicxml.xsd"
 
@@ -37,7 +38,7 @@ class MusicXmlReaderTests extends AnyFlatSpec {
 
   it should "work with 0" in {
     val xmlPath = "src/test/resources/lilypond_2_20_regression_musicxml/43a-PianoStaff.xml"
-    val musicXmlData: Array[Byte] = Files.readAllBytes(Paths.get(xmlPath))
+    val musicXmlData: Array[Byte] = Files.readAllBytes(Paths.get(xmlPath)).nn
 
     val result: ScorePartwise = read(musicXmlData, xsdPath).getRightResultForTest
 
@@ -56,7 +57,7 @@ class MusicXmlReaderTests extends AnyFlatSpec {
 
   it should "work with 1" in {
     val xmlPath = "src/test/resources/lilypond_2_20_regression_musicxml/46c-Midmeasure-Clef.xml"
-    val musicXmlData: Array[Byte] = Files.readAllBytes(Paths.get(xmlPath))
+    val musicXmlData: Array[Byte] = Files.readAllBytes(Paths.get(xmlPath)).nn
 
     val result: ScorePartwise = read(musicXmlData, xsdPath).getRightResultForTest
 

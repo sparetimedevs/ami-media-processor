@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 sparetimedevs and respective authors and developers.
+ * Copyright (c) 2022 sparetimedevs and respective authors and developers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package test
+package com.sparetimedevs.ami.test.util
 
 import cats.data.EitherT
 import cats.effect.IO
 import cats.effect.unsafe.IORuntime
 
-private val runtime: IORuntime = cats.effect.unsafe.IORuntime.global
-
-extension [A, B](e: EitherT[IO, A, B]) def getRightResultForTest: B = e.value.unsafeRunSync()(runtime).getOrElse(throw new RuntimeException("Test case should yield a Right!"))
-extension [A, B](e: EitherT[IO, A, B]) def getLeftResultForTest: A = e.value.unsafeRunSync()(runtime).swap.getOrElse(throw new RuntimeException("Test case should yield a Left!"))
+extension [A, B](e: EitherT[IO, A, B])
+  def getRightResultForTest(implicit runtime: IORuntime): B = e.value.unsafeRunSync()(runtime).getOrElse(throw new RuntimeException("Test case should yield a Right!"))
+extension [A, B](e: EitherT[IO, A, B])
+  def getLeftResultForTest(implicit runtime: IORuntime): A = e.value.unsafeRunSync()(runtime).swap.getOrElse(throw new RuntimeException("Test case should yield a Left!"))
 
 extension [A, B](either: Either[A, B]) def getRightResultForTest: B = either.getOrElse(throw new RuntimeException("Test case should yield a Right!"))
 extension [A, B](either: Either[A, B]) def getLeftResultForTest: A = either.swap.getOrElse(throw new RuntimeException("Test case should yield a Left!"))

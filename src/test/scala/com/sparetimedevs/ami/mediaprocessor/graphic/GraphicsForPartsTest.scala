@@ -18,10 +18,10 @@ package com.sparetimedevs.ami.mediaprocessor.graphic
 
 import cats.effect.unsafe.IORuntime
 import com.sparetimedevs.ami.core.{Duration, Measure, Note, NoteType, Pitch, Step}
+import com.sparetimedevs.ami.test.util.getRightResultForTest
 import doodle.image.Image
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import test.getRightResultForTest
 
 class GraphicsForPartsTest extends AnyFlatSpec with Matchers {
 
@@ -40,7 +40,7 @@ class GraphicsForPartsTest extends AnyFlatSpec with Matchers {
       )
     )
 
-    val result: Map[String, Image] = createImagesForParts(measuresForParts: Map[String, Seq[Measure]]).value.unsafeRunSync().getRightResultForTest
+    val result: Map[String, Image] = createImagesForParts(measuresForParts: Map[String, Seq[Measure]]).getRightResultForTest
 
     result("part 1") shouldBe a[Image]
     result("part 2") shouldBe a[Image]

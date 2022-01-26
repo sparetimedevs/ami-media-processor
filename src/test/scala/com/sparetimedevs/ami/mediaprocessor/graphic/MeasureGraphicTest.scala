@@ -20,6 +20,7 @@ import cats.Eval
 import cats.effect.unsafe.IORuntime
 import com.sparetimedevs.ami.core.{Measure, MusicComponent}
 import com.sparetimedevs.ami.mediaprocessor.test.getBoundingBox
+import com.sparetimedevs.ami.test.util.getRightResultForTest
 import doodle.algebra.generic.{ContextTransform, Renderable}
 import doodle.algebra.{Algebra, Picture, Size}
 import doodle.core.{BoundingBox, Color}
@@ -35,7 +36,6 @@ import doodle.language.Basic
 import doodle.syntax.all.circle
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import test.getRightResultForTest
 
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
@@ -68,7 +68,7 @@ class MeasureGraphicTest extends AnyFlatSpec with Matchers {
     val measure2: Measure = Measure(musicData = musicData2, number = number2)
     val measures: Seq[Measure] = List(measure1, measure2)
 
-    val result: Image = createImage(measures).value.unsafeRunSync().getRightResultForTest
+    val result: Image = createImage(measures).getRightResultForTest
 
     val boundingBox: BoundingBox = result.getBoundingBox
 
@@ -94,7 +94,7 @@ class MeasureGraphicTest extends AnyFlatSpec with Matchers {
     val measure5: Measure = Measure(musicData = musicData5, number = number5)
     val measures: Seq[Measure] = List(measure1, measure2, measure3, measure4, measure5)
 
-    val result: Image = createImage(measures).value.unsafeRunSync().getRightResultForTest
+    val result: Image = createImage(measures).getRightResultForTest
 
     val boundingBox: BoundingBox = result.getBoundingBox
 
@@ -126,7 +126,7 @@ class MeasureGraphicTest extends AnyFlatSpec with Matchers {
     val measure7: Measure = Measure(musicData = musicData7, number = number7)
     val measures: Seq[Measure] = List(measure1, measure2, measure3, measure4, measure5, measure6, measure7)
 
-    val result: Image = createImage(measures).value.unsafeRunSync().getRightResultForTest
+    val result: Image = createImage(measures).getRightResultForTest
 
     val boundingBox: BoundingBox = result.getBoundingBox
 

@@ -21,28 +21,28 @@ sealed trait MusicComponent
 case class NotImplementedMusicComponent() extends MusicComponent {}
 
 case class Note(
-  id: String = null,
+  id: Option[String] = None,
   option: NoteOption,
   printLeger: YesNo = YesNo.No,
-  dynamics: BigDecimal = null,
-  endDynamics: BigDecimal = null,
-  attack: BigDecimal = null,
-  release: BigDecimal = null,
-  timeOnly: String = null,
+  dynamics: Option[BigDecimal] = None,
+  endDynamics: Option[BigDecimal] = None,
+  attack: Option[BigDecimal] = None,
+  release: Option[BigDecimal] = None,
+  timeOnly: Option[String] = None,
   pizzicato: YesNo = YesNo.No,
-  color: String = null,
-  fontFamily: String = null,
-  fontStyle: FontStyle = null,
-  fontSize: String = null,
-  fontWeight: FontWeight = null,
+  color: Option[String] = None,
+  fontFamily: Option[String] = None,
+  fontStyle: Option[FontStyle] = None,
+  fontSize: Option[String] = None,
+  fontWeight: Option[FontWeight] = None,
   printDot: YesNo = YesNo.No,
   printLyric: YesNo = YesNo.No,
   printObject: YesNo = YesNo.No,
   printSpacing: YesNo = YesNo.No,
-  defaultX: BigDecimal = null,
-  defaultY: BigDecimal = null,
-  relativeX: BigDecimal = null,
-  relativeY: BigDecimal = null
+  defaultX: Option[BigDecimal] = None,
+  defaultY: Option[BigDecimal] = None,
+  relativeX: Option[BigDecimal] = None,
+  relativeY: Option[BigDecimal] = None
 ) extends MusicComponent
 
 case class AttributesType(
@@ -57,5 +57,5 @@ case class AttributesType(
   staffDetails: Seq[StaffDetails] = Nil,
   transpose: Seq[Transpose] = Nil,
   directive: Seq[Directive] = Nil,
-  measureuStyle: Seq[MeasureStyle] = Nil
+  measureStyle: Seq[MeasureStyle] = Nil
 ) extends MusicComponent

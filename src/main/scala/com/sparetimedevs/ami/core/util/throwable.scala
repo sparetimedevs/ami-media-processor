@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 sparetimedevs and respective authors and developers.
+ * Copyright (c) 2022 sparetimedevs and respective authors and developers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package com.sparetimedevs.ami.core
+package com.sparetimedevs.ami.core.util
 
-case class Measure(
-  id: Option[String] = None,
-  musicData: Seq[MusicComponent],
-  number: String,
-  text: Option[String] = None,
-  `implicit`: YesNo = YesNo.No,
-  nonControlling: YesNo = YesNo.No,
-  width: Option[BigDecimal] = None
-)
+import com.sparetimedevs.ami.core.util.nullableAsOption
+
+def getMessage(t: Throwable): String =
+  t.getMessage.nullableAsOption match {
+    case Some(t) => t
+    case None    => s"Throwable ${t.getClass.getSimpleName} without message defined."
+  }
