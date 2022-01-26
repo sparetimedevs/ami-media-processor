@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
 jobs:
-  test:
+  check-format:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,5 +15,15 @@ jobs:
           java-version: 11
       - name: Check format
         run: sbt scalafmtCheckAll
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 11
       - name: Build and Test
         run: sbt -v +test
