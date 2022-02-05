@@ -22,6 +22,7 @@ import cats.effect.implicits.*
 import cats.implicits.*
 import com.sparetimedevs.ami.core.*
 import com.sparetimedevs.ami.mediaprocessor.*
+import com.sparetimedevs.ami.mediaprocessor.graphic.vector.{NoteVectors, asNotesVectors}
 import doodle.core.{Color, *}
 import doodle.image.*
 
@@ -82,11 +83,12 @@ private[mediaprocessor] def createOneImage(images: Seq[Image]): Image =
   })
 
 private[mediaprocessor] def depictMusicData(musicData: Seq[MusicComponent], image: Image): Either[Errors, Image] = {
-
   val (notes: Seq[Note], attributesTypes: Seq[AttributesType], notImplementedMusicComponents: Seq[NotImplementedMusicComponent]) = separate(musicData)
 
-  val pathCoordinates: Seq[(Double, Double, Double, Double)] = paths(Nil, notes.map((note: Note) => note.option))
-  val pathElements: Seq[PathElement] = toPathElements(pathCoordinates)
+  val graphicProperties: GraphicProperties = getGraphicProperties
+
+  val notesVectors: Seq[NoteVectors] = notes.map((note: Note) => note.option).asNotesVectors
+  val pathElements: Seq[PathElement] = toPathElements(notesVectors, graphicProperties)
 
   val newImage = Image.openPath(pathElements).at(-298.0, -148.0).strokeWidth(2.0).on(image)
 
@@ -105,68 +107,22 @@ private[mediaprocessor] def separate(musicData: Seq[MusicComponent]): (List[Note
   }
 }
 
-@tailrec
-private[mediaprocessor] def paths(acc: Seq[(Double, Double, Double, Double)], noteOptions: Seq[NoteOption]): Seq[(Double, Double, Double, Double)] = {
-  /* Tuple4[Double, Double, Double, Double] = startX, startY, endX, endY */
-
-  if (noteOptions.isEmpty) return acc
-  /* arbitrary offsets, probably should be configurable */
+private[mediaprocessor] def getGraphicProperties = {
+  /* Arbitrary values, probably should be configurable. */
   val offsetX: Double = 20
+  val cutOffXToReflectNoteIsEnding = 8
   val offsetY: Double = 60
-  // For now a whole step is 4 a half step is 2
-  // This should be a dynamic setting / parameter.
-  // For instance, it should also be possible to use 8 for whole; 4 for half. etc.
-  val wholeStepExpressedInY: Double = 4
-
-  val noteOption = noteOptions.head
-  val (startX: Double, endX: Double) =
-    if acc.isEmpty then (offsetX, pathX(noteOption, offsetX))
-    else if noteOption.isNotePartOfChord then (acc.last._1, acc.last._3)
-    else (acc.last._3, pathX(noteOption, acc.last._3))
-
-  val y = noteOption match {
-    case pitch: Pitch         => pathY(pitch, offsetY, wholeStepExpressedInY)
-    case rest: Rest           => 30
-    case unpitched: Unpitched => 570
-  }
-
-  val newAcc = acc ++ List((startX, y, endX, y))
-
-  paths(newAcc, noteOptions.tail)
+  val wholeStepExpressedInY: Double = 4 // For now a whole step is 4 and a half step is 2. It should also be possible to use 8 for whole; 4 for half. etc.
+  val xProperties = XProperties(offsetX, cutOffXToReflectNoteIsEnding)
+  val yProperties = YProperties(offsetY, wholeStepExpressedInY)
+  GraphicProperties(xProperties, yProperties)
 }
 
-private[mediaprocessor] def pathX(noteOption: NoteOption, offsetX: Double): Double = {
-  val noteTypeDistanceValue = noteOption.noteType match {
-    case _: NoteType.Maxima.type  => 600 // How big should this be?
-    case _: NoteType.Long.type    => 600 // How big should this be?
-    case _: NoteType.Breve.type   => 600 // How big should this be?
-    case _: NoteType.Whole.type   => 400
-    case _: NoteType.Half.type    => 200
-    case _: NoteType.Quarter.type => 100
-    case _: NoteType.Eighth.type  => 50
-    case _: NoteType._16th.type   => 25
-    case _: NoteType._32nd.type   => 12.5
-    case _: NoteType._64th.type   => 6.25
-    case _: NoteType._128th.type  => 3.125
-    case _: NoteType._256th.type  => 1.5625
-    case _: NoteType._512th.type  => 0.78125
-    case _: NoteType._1024th.type => 0.390625
+private[mediaprocessor] def toPathElements(notesVectors: Seq[NoteVectors], graphicProperties: GraphicProperties): Seq[PathElement] =
+  notesVectors.flatMap { vectors =>
+    val startX: Double = vectors.start.x + graphicProperties.xProperties.offsetX
+    val startY: Double = (vectors.start.y * graphicProperties.yProperties.wholeStepExpressedInY) + graphicProperties.yProperties.offsetY
+    val endXWithCutOff: Double = vectors.end.x + graphicProperties.xProperties.offsetX - graphicProperties.xProperties.cutOffXToReflectNoteIsEnding
+    val endY: Double = (vectors.end.y * graphicProperties.yProperties.wholeStepExpressedInY) + graphicProperties.yProperties.offsetY
+    List(PathElement.moveTo(startX, startY), PathElement.lineTo(endXWithCutOff, endY))
   }
-  noteTypeDistanceValue + offsetX
-}
-
-private[mediaprocessor] def pathY(pitch: Pitch, offsetY: Double, wholeStepExpressedInY: Double): Double = {
-  val y: Double = pitch.step match {
-    case Step.A => 1 * wholeStepExpressedInY
-    case Step.B => 2 * wholeStepExpressedInY
-    case Step.C => 2.5 * wholeStepExpressedInY
-    case Step.D => 3.5 * wholeStepExpressedInY
-    case Step.E => 4.5 * wholeStepExpressedInY
-    case Step.F => 5 * wholeStepExpressedInY
-    case Step.G => 6 * wholeStepExpressedInY
-  }
-  y + offsetY
-}
-
-private[mediaprocessor] def toPathElements(pathCoordinates: Seq[(Double, Double, Double, Double)]): Seq[PathElement] =
-  pathCoordinates.flatMap(coordinates => { List(PathElement.moveTo(coordinates._1, coordinates._2), PathElement.lineTo(coordinates._3, coordinates._4)) })
