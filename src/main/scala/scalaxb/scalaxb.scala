@@ -1,7 +1,7 @@
 package scalaxb
 
 import scala.xml.{Node, NodeSeq, NamespaceBinding, Elem, UnprefixedAttribute, PrefixedAttribute}
-import javax.xml.datatype.{XMLGregorianCalendar}
+import javax.xml.datatype.XMLGregorianCalendar
 import javax.xml.namespace.QName
 import javax.xml.bind.DatatypeConverter
 
@@ -689,11 +689,12 @@ trait AnyElemNameParser extends scala.util.parsing.combinator.Parsers {
       }
     }
 
+    @tailrec
     private def lookupSuccess[U](p: Parser[U], input: Input): ParseResult[U] = p(input) match {
-      case s@Success(v, next) =>
+      case s @ Success(result, next) =>
         parseIterable(input, input, p, s)
-      case n@NoSuccess(b, next) =>
-        if (next.atEnd) n
+      case ns: NoSuccess =>
+        if (ns.next.atEnd) ns
         else lookupSuccess(p, input.rest)
     }
 

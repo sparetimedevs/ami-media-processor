@@ -31,7 +31,6 @@ object Yesu45no {
 case object Yes extends Yesu45no { override def toString = "yes" }
 case object No extends Yesu45no { override def toString = "no" }
 
-
 /** The opus type is used for the root element of a MusicXML opus. Each opus is made up of a series of score, opus-link, and/or nested opus elements. The document-attributes attribute group includes the version attribute. Future versions may include more metadata elements. In this version, we just include the title of the opus.
 */
 case class Opus(title: Option[String] = None,
@@ -39,9 +38,6 @@ case class Opus(title: Option[String] = None,
   attributes: Map[String, scalaxb.DataRecord[Any]] = Map.empty) extends OpusOption {
   lazy val version = attributes("@version").as[String]
 }
-
-      
-      
 
 trait OpusOption
 
@@ -56,10 +52,6 @@ case class Opusu45link(attributes: Map[String, scalaxb.DataRecord[Any]] = Map.em
   lazy val xlinkactuate = attributes("@{http://www.w3.org/1999/xlink}actuate").as[Actuate]
 }
 
-      
-      
-
-
 /** The score elements provide the links to the individual movements. The new-page attribute, added in Version 2.0, is used to indicate if the first page of the score is different than the last page of the previous score. If new-page is "yes", then a different page is used; if "no", then the same page is used. The default value is implementation-dependent.
 */
 case class Score(attributes: Map[String, scalaxb.DataRecord[Any]] = Map.empty) extends OpusOption {
@@ -72,23 +64,3 @@ case class Score(attributes: Map[String, scalaxb.DataRecord[Any]] = Map.empty) e
   lazy val newu45page = attributes.get("@new-page") map { _.as[Yesu45no]}
 }
 
-      
-      
-//
-//
-///** The link-attributes group includes all the simple XLink attributes supported in the MusicXML format.
-//*/
-//case class Linku45attributes(xlinkhref: java.net.URI,
-//  xlinktype: musicxml.Type,
-//  xlinkrole: Option[String] = None,
-//  xlinktitle: Option[String] = None,
-//  xlinkshow: musicxml.Show,
-//  xlinkactuate: musicxml.Actuate)
-//
-//
-///** The document-attributes attribute group is used to specify the attributes for an entire MusicXML document. Currently this is used for the version attribute.
-//
-//The version attribute was added in Version 2.0 for opus documents. It provides an easier way to get version information than through the MusicXML public ID. The default value is 1.0 to make it possible for programs that handle later versions to distinguish earlier version files reliably. Programs that write MusicXML 2.0 or later opus files should set this attribute.
-//*/
-//case class Documentu45attributes(version: String)
-//
