@@ -61,9 +61,7 @@ object SpaceType {
 case object Default extends SpaceType { override def toString = "default" }
 case object Preserve extends SpaceType { override def toString = "preserve" }
 
-
 case class SpecialAttrs(xmlbase: Option[java.net.URI] = None,
   xmllang: Option[String] = None,
   xmlspace: Option[String] = None,
   xmlid: Option[String] = None)
-

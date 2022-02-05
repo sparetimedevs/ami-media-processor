@@ -59,4 +59,3 @@ case object OnRequest extends Actuate { override def toString = "onRequest" }
 case object OnLoad extends Actuate { override def toString = "onLoad" }
 case object OtherValue6 extends Actuate { override def toString = "other" }
 case object NoneTypeValue16 extends Actuate { override def toString = "none" }
-
