@@ -47,25 +47,8 @@ private[graphic] def vectors(acc: Seq[NoteVectors], noteOptions: Seq[NoteOption]
   vectors(newAcc, noteOptions.tail)
 }
 
-private[graphic] def vectorComponentXAtEnd(noteOption: NoteOption, currentX: Double): Double = {
-  val noteTypeDistanceValue = noteOption.noteType match {
-    case _: NoteType.Maxima.type  => 600 // How big should this be?
-    case _: NoteType.Long.type    => 600 // How big should this be?
-    case _: NoteType.Breve.type   => 600 // How big should this be?
-    case _: NoteType.Whole.type   => 400
-    case _: NoteType.Half.type    => 200
-    case _: NoteType.Quarter.type => 100
-    case _: NoteType.Eighth.type  => 50
-    case _: NoteType._16th.type   => 25
-    case _: NoteType._32nd.type   => 12.5
-    case _: NoteType._64th.type   => 6.25
-    case _: NoteType._128th.type  => 3.125
-    case _: NoteType._256th.type  => 1.5625
-    case _: NoteType._512th.type  => 0.78125
-    case _: NoteType._1024th.type => 0.390625
-  }
-  currentX + noteTypeDistanceValue
-}
+private[graphic] def vectorComponentXAtEnd(noteOption: NoteOption, currentX: Double): Double =
+  currentX + (noteOption.noteType.value * 400)
 
 private[graphic] def vectorComponentY(pitch: Pitch): Double =
   pitch.step match {

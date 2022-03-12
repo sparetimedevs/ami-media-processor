@@ -17,6 +17,7 @@
 package com.sparetimedevs.ami.mediaprocessor.graphic.vector
 
 import com.sparetimedevs.ami.core.{Duration, Measure, Note, NoteOption, NoteType, Pitch, Rest, Step}
+import com.sparetimedevs.ami.test.data.{createPitch, createRest}
 import doodle.image.Image
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -24,7 +25,7 @@ import org.scalatest.matchers.should.Matchers
 class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
 
   it should "create NoteVectors for one note" in {
-    val noteOptions: Seq[NoteOption] = Seq(Pitch(Step.C, noteType = NoteType.Whole, duration = Duration(4), isNotePartOfChord = false))
+    val noteOptions: Seq[NoteOption] = Seq(createPitch(Step.C, noteType = NoteType.Whole))
 
     val result: Seq[NoteVectors] = noteOptions.asNotesVectors
 
@@ -33,8 +34,8 @@ class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
 
   it should "create NoteVectors for two notes" in {
     val noteOptions: Seq[NoteOption] = Seq(
-      Pitch(Step.C, noteType = NoteType.Half, duration = Duration(2), isNotePartOfChord = false),
-      Pitch(Step.A, noteType = NoteType.Half, duration = Duration(2), isNotePartOfChord = false)
+      createPitch(Step.C, noteType = NoteType.Half),
+      createPitch(Step.A, noteType = NoteType.Half)
     )
 
     val result: Seq[NoteVectors] = noteOptions.asNotesVectors
@@ -44,10 +45,10 @@ class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
 
   it should "create NoteVectors for rests" in {
     val noteOptions: Seq[NoteOption] = Seq(
-      Pitch(Step.G, noteType = NoteType.Quarter, duration = Duration(1), isNotePartOfChord = false),
-      Rest(noteType = NoteType.Quarter, duration = Duration(1)),
-      Pitch(Step.D, noteType = NoteType.Quarter, duration = Duration(1), isNotePartOfChord = false),
-      Rest(noteType = NoteType.Quarter, duration = Duration(1))
+      createPitch(Step.G, noteType = NoteType.Quarter),
+      createRest(noteType = NoteType.Quarter),
+      createPitch(Step.D, noteType = NoteType.Quarter),
+      createRest(noteType = NoteType.Quarter)
     )
 
     val result: Seq[NoteVectors] = noteOptions.asNotesVectors
@@ -62,74 +63,74 @@ class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
 
   it should "create NoteVectors for all note steps" in {
     val noteOptions: Seq[NoteOption] = Seq(
-      Pitch(Step.A, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.B, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.C, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.D, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.E, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.F, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.G, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Rest(noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625))),
-      Pitch(Step.A, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.B, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.C, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.D, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.E, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.F, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.G, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Rest(noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625))),
-      Pitch(Step.A, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.B, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.C, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.D, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.E, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.F, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.G, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Rest(noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625))),
-      Pitch(Step.A, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.B, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.C, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.D, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.E, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.F, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.G, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Rest(noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625))),
-      Pitch(Step.A, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.B, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.C, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.D, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.E, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.F, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.G, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Rest(noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625))),
-      Pitch(Step.A, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.B, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.C, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.D, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.E, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.F, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.G, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Rest(noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625))),
-      Pitch(Step.A, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.B, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.C, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.D, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.E, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.F, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.G, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Rest(noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625))),
-      Pitch(Step.A, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.B, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.C, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.D, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.E, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.F, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Pitch(Step.G, noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625)), isNotePartOfChord = false),
-      Rest(noteType = NoteType._1024th, duration = Duration(BigDecimal.valueOf(0.00390625))),
-      Rest(noteType = NoteType._16th, duration = Duration(0.25)),
-      Rest(noteType = NoteType.Eighth, duration = Duration(0.5)),
-      Rest(noteType = NoteType.Quarter, duration = Duration(1)),
-      Rest(noteType = NoteType.Half, duration = Duration(2))
+      createPitch(Step.A, noteType = NoteType._1024th),
+      createPitch(Step.B, noteType = NoteType._1024th),
+      createPitch(Step.C, noteType = NoteType._1024th),
+      createPitch(Step.D, noteType = NoteType._1024th),
+      createPitch(Step.E, noteType = NoteType._1024th),
+      createPitch(Step.F, noteType = NoteType._1024th),
+      createPitch(Step.G, noteType = NoteType._1024th),
+      createRest(noteType = NoteType._1024th),
+      createPitch(Step.A, noteType = NoteType._1024th),
+      createPitch(Step.B, noteType = NoteType._1024th),
+      createPitch(Step.C, noteType = NoteType._1024th),
+      createPitch(Step.D, noteType = NoteType._1024th),
+      createPitch(Step.E, noteType = NoteType._1024th),
+      createPitch(Step.F, noteType = NoteType._1024th),
+      createPitch(Step.G, noteType = NoteType._1024th),
+      createRest(noteType = NoteType._1024th),
+      createPitch(Step.A, noteType = NoteType._1024th),
+      createPitch(Step.B, noteType = NoteType._1024th),
+      createPitch(Step.C, noteType = NoteType._1024th),
+      createPitch(Step.D, noteType = NoteType._1024th),
+      createPitch(Step.E, noteType = NoteType._1024th),
+      createPitch(Step.F, noteType = NoteType._1024th),
+      createPitch(Step.G, noteType = NoteType._1024th),
+      createRest(noteType = NoteType._1024th),
+      createPitch(Step.A, noteType = NoteType._1024th),
+      createPitch(Step.B, noteType = NoteType._1024th),
+      createPitch(Step.C, noteType = NoteType._1024th),
+      createPitch(Step.D, noteType = NoteType._1024th),
+      createPitch(Step.E, noteType = NoteType._1024th),
+      createPitch(Step.F, noteType = NoteType._1024th),
+      createPitch(Step.G, noteType = NoteType._1024th),
+      createRest(noteType = NoteType._1024th),
+      createPitch(Step.A, noteType = NoteType._1024th),
+      createPitch(Step.B, noteType = NoteType._1024th),
+      createPitch(Step.C, noteType = NoteType._1024th),
+      createPitch(Step.D, noteType = NoteType._1024th),
+      createPitch(Step.E, noteType = NoteType._1024th),
+      createPitch(Step.F, noteType = NoteType._1024th),
+      createPitch(Step.G, noteType = NoteType._1024th),
+      createRest(noteType = NoteType._1024th),
+      createPitch(Step.A, noteType = NoteType._1024th),
+      createPitch(Step.B, noteType = NoteType._1024th),
+      createPitch(Step.C, noteType = NoteType._1024th),
+      createPitch(Step.D, noteType = NoteType._1024th),
+      createPitch(Step.E, noteType = NoteType._1024th),
+      createPitch(Step.F, noteType = NoteType._1024th),
+      createPitch(Step.G, noteType = NoteType._1024th),
+      createRest(noteType = NoteType._1024th),
+      createPitch(Step.A, noteType = NoteType._1024th),
+      createPitch(Step.B, noteType = NoteType._1024th),
+      createPitch(Step.C, noteType = NoteType._1024th),
+      createPitch(Step.D, noteType = NoteType._1024th),
+      createPitch(Step.E, noteType = NoteType._1024th),
+      createPitch(Step.F, noteType = NoteType._1024th),
+      createPitch(Step.G, noteType = NoteType._1024th),
+      createRest(noteType = NoteType._1024th),
+      createPitch(Step.A, noteType = NoteType._1024th),
+      createPitch(Step.B, noteType = NoteType._1024th),
+      createPitch(Step.C, noteType = NoteType._1024th),
+      createPitch(Step.D, noteType = NoteType._1024th),
+      createPitch(Step.E, noteType = NoteType._1024th),
+      createPitch(Step.F, noteType = NoteType._1024th),
+      createPitch(Step.G, noteType = NoteType._1024th),
+      createRest(noteType = NoteType._1024th),
+      createRest(noteType = NoteType._16th),
+      createRest(noteType = NoteType.Eighth),
+      createRest(noteType = NoteType.Quarter),
+      createRest(noteType = NoteType.Half)
     )
 
     val result: Seq[NoteVectors] = noteOptions.asNotesVectors
@@ -212,12 +213,12 @@ class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
       Pitch(Step.G, noteType = NoteType.Quarter, duration = Duration(1), isNotePartOfChord = false),
       Pitch(Step.B, noteType = NoteType.Quarter, duration = Duration(1), isNotePartOfChord = true),
       Pitch(Step.D, noteType = NoteType.Quarter, duration = Duration(1), isNotePartOfChord = true),
-      Rest(noteType = NoteType.Quarter, duration = Duration(1)),
+      createRest(noteType = NoteType.Quarter),
       // D major
       Pitch(Step.D, noteType = NoteType.Quarter, duration = Duration(1), isNotePartOfChord = false),
       // Pitch(Step.FSharp, noteType = NoteType.Quarter, duration = Duration(1), isNotePartOfChord = true),
       Pitch(Step.A, noteType = NoteType.Quarter, duration = Duration(1), isNotePartOfChord = true),
-      Rest(noteType = NoteType.Quarter, duration = Duration(1))
+      createRest(noteType = NoteType.Quarter)
     )
 
     val result: Seq[NoteVectors] = noteOptions.asNotesVectors

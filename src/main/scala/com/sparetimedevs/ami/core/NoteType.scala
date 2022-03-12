@@ -16,5 +16,18 @@
 
 package com.sparetimedevs.ami.core
 
-enum NoteType:
-  case Maxima, Long, Breve, Whole, Half, Quarter, Eighth, _16th, _32nd, _64th, _128th, _256th, _512th, _1024th
+enum NoteType(val value: Double):
+  case Maxima extends NoteType(8)
+  case Long extends NoteType(4)
+  case Breve extends NoteType(2)
+  case Whole extends NoteType(1)
+  case Half extends NoteType(0.5)
+  case Quarter extends NoteType(0.25)
+  case Eighth extends NoteType(0.125)
+  case _16th extends NoteType(0.0625)
+  case _32nd extends NoteType(0.03125)
+  case _64th extends NoteType(0.015625)
+  case _128th extends NoteType(0.0078125)
+  case _256th extends NoteType(0.00390625)
+  case _512th extends NoteType(0.001953125)
+  case _1024th extends NoteType(0.0009765625)
