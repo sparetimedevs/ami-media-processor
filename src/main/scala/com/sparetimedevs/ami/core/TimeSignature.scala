@@ -16,6 +16,10 @@
 
 package com.sparetimedevs.ami.core
 
+/**
+ * A time signature is represented by the beats element for the numerator and
+ * the beat-type element for the denominator.
+ */
 case class TimeSignature(
   beats: Beats,
   beatType: BeatType
