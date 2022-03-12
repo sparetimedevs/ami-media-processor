@@ -20,6 +20,7 @@ import cats.data.EitherT
 import cats.effect.IO
 import cats.syntax.either.catsSyntaxEitherId
 import com.sparetimedevs.ami.core.ScorePartwise
+import com.sparetimedevs.ami.core.util.getMessage
 import com.sparetimedevs.ami.mediaprocessor.{Errors, IOEitherErrorsOr, XmlParseError, asIOEitherErrorsOrT}
 import musicxml.{Scoreu45partwise, XMLProtocol}
 import scalaxb.{ElemName, XMLFormat}
@@ -39,5 +40,5 @@ private object ScorePartwiseXmlProtocol extends XMLProtocol {
   def fromXml(seq: NodeSeq, stack: List[ElemName] = Nil): IOEitherErrorsOr[Scoreu45partwise] =
     IO {
       scalaxb.fromXMLEither(seq, stack).left.map { (message: String) => XmlParseError(message).asOnlyError }
-    }.handleErrorWith { (t: Throwable) => IO.pure(XmlParseError(t.getMessage).asOnlyError.asLeft) }.asIOEitherErrorsOrT
+    }.handleErrorWith { (t: Throwable) => IO.pure(XmlParseError(getMessage(t)).asOnlyError.asLeft) }.asIOEitherErrorsOrT
 }

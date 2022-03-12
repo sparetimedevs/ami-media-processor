@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 sparetimedevs and respective authors and developers.
+ * Copyright (c) 2022 sparetimedevs and respective authors and developers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package componenttest.util
+package com.sparetimedevs.ami.componenttest.util
 
 import com.commodityvectors.snapshotmatchers.SnapshotMatcher
 import org.apache.commons.io.FileUtils

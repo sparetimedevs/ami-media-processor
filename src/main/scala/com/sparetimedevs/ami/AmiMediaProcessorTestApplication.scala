@@ -18,11 +18,13 @@ package com.sparetimedevs.ami
 
 import cats.effect.unsafe.IORuntime
 import cats.effect.{ExitCode, IO, IOApp}
+import com.sparetimedevs.ami.core.util.nullableAsOption
 import com.sparetimedevs.ami.mediaprocessor.file.Format
 import com.sparetimedevs.ami.mediaprocessor.{Errors, MediaProcessorImpl}
 
 import java.io.{File, InputStream}
 import java.nio.file.{Files, Paths}
+import scala.Array.emptyByteArray
 
 /**
  * The Ami Media Processor Test Application entry point.
@@ -37,7 +39,10 @@ object AmiMediaProcessorTestApplication extends IOApp {
 
   private given implicitRuntime: IORuntime = this.runtime
 
-  private val musicXmlData: Array[Byte] = Files.readAllBytes(Paths.get(xmlPath))
+  private val musicXmlData: Array[Byte] = Files.readAllBytes(Paths.get(xmlPath)).nullableAsOption match {
+    case Some(value) => value
+    case None        => emptyByteArray
+  }
 
   private val mediaProcessor: MediaProcessor = new MediaProcessorImpl()
 

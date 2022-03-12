@@ -4,6 +4,11 @@ ThisBuild / organization := "com.sparetimedevs"
 ThisBuild / version := "0.0.1"
 ThisBuild / scalaVersion := "3.1.0"
 
+scalacOptions ++= Seq(
+  "-Yexplicit-nulls",
+  "-Ysafe-init"
+)
+
 lazy val root = (project in file("."))
   .settings(
     name := "ami-media-processor",

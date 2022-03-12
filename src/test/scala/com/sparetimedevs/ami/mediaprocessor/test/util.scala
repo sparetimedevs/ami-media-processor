@@ -16,6 +16,7 @@
 
 package com.sparetimedevs.ami.mediaprocessor.test
 
+import com.sparetimedevs.ami.mediaprocessor.graphic.toPicture
 import doodle.algebra.Picture
 import doodle.algebra.generic.Renderable
 import doodle.core.BoundingBox
@@ -25,15 +26,15 @@ import doodle.java2d.algebra.Algebra
 import doodle.java2d.algebra.reified.Reification
 import doodle.java2d.effect.Java2d
 import doodle.language.Basic
-import com.sparetimedevs.ami.mediaprocessor.graphic.toPicture
 
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
+import scala.runtime.Scala3RunTime.nn
 
 extension (image: Image)
   def getBoundingBox: BoundingBox =
     val bufferedImage: BufferedImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB)
-    val graphics2D: Graphics2D = bufferedImage.createGraphics()
+    val graphics2D: Graphics2D = bufferedImage.createGraphics().nn
     val newGraphics2D: Graphics2D = Java2d.setup(graphics2D)
     implicit val algebra: Algebra = Algebra(newGraphics2D)
     val drawing: Drawing[Unit] = image.toPicture.apply

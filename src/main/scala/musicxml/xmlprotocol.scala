@@ -2,7 +2,16 @@
 package musicxml
 
 import scala.concurrent.{ Future, ExecutionContext }
+import scala.language.unsafeNulls
 
+/**
+ * Take note of import statement: import scala.language.unsafeNulls
+ *
+ * The code in this file will have a similar semantic as regular Scala, but not
+ * equivalent.
+ *
+ * NullPointerExceptions can occur!
+ */
 
 /**
 usage:

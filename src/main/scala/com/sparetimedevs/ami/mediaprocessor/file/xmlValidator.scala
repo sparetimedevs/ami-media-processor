@@ -17,6 +17,8 @@
 package com.sparetimedevs.ami.mediaprocessor.file
 
 import cats.effect.IO
+import cats.syntax.all.*
+import com.sparetimedevs.ami.core.util.{getMessage, nullableAsOption}
 import com.sparetimedevs.ami.mediaprocessor.{Errors, IOEitherErrorsOr, ValidationError, asIOEitherErrorsOrT}
 
 import java.io.{ByteArrayInputStream, File, FileInputStream, InputStream}
@@ -33,15 +35,16 @@ def validate(musicXmlData: Array[Byte], xsdPath: String): IOEitherErrorsOr[Node]
   IO {
     Using
       .Manager { (use: Using.Manager) =>
-        val features: CatalogFeatures = CatalogFeatures.defaults()
-        val catalogFileUri: URI = new File("src/main/resources/catalog.xml").toURI
-        val catalogResolver: CatalogResolver = CatalogManager.catalogResolver(features, catalogFileUri)
+        val maybeFeatures: Option[CatalogFeatures] = CatalogFeatures.defaults().nullableAsOption
+        val maybeCatalogFileUri: Option[URI] = new File("src/main/resources/catalog.xml").toURI.nullableAsOption
+        def catalogResolver(features: CatalogFeatures, catalogFileUri: URI): CatalogResolver | Null = CatalogManager.catalogResolver(features, catalogFileUri)
+        val maybeCatalogResolver: Option[CatalogResolver] = (maybeFeatures, maybeCatalogFileUri)
+          .apWith { Some(catalogResolver) }
+          .flatMap { catalogResolver => catalogResolver.nullableAsOption }
 
-        val factory: SchemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
+        val maybeFactory: Option[SchemaFactory] = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).nullableAsOption
 
-        factory.setResourceResolver(catalogResolver)
-
-        val schema: Schema = factory.newSchema(new File(xsdPath))
+        (maybeCatalogResolver, maybeFactory).mapN((catalogResolver, factory) => factory.setResourceResolver(catalogResolver))
 
         val adapter = new NoBindingFactoryAdapter
         val saxResult = new SAXResult(adapter)
@@ -50,11 +53,13 @@ def validate(musicXmlData: Array[Byte], xsdPath: String): IOEitherErrorsOr[Node]
         val inputSource: InputSource = new InputSource(inputStream)
         val source: SAXSource = new SAXSource(inputSource)
 
-        val validator: Validator = schema.newValidator()
-        validator.validate(source, saxResult)
+        maybeFactory
+          .flatMap { factory => factory.newSchema(new File(xsdPath)).nullableAsOption }
+          .flatMap { schema => schema.newValidator().nullableAsOption }
+          .foreach { validator => validator.validate(source, saxResult) }
         adapter.rootElem
       }
       .toEither
       .left
-      .map { (t: Throwable) => ValidationError(t.getMessage).asOnlyError }
+      .map { (t: Throwable) => ValidationError(getMessage(t)).asOnlyError }
   }.asIOEitherErrorsOrT

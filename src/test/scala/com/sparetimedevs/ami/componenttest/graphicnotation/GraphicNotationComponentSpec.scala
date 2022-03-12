@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 sparetimedevs and respective authors and developers.
+ * Copyright (c) 2022 sparetimedevs and respective authors and developers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 
-package componenttest.graphicnotation
+package com.sparetimedevs.ami.componenttest.graphicnotation
 
 import cats.effect.unsafe.IORuntime
 import com.commodityvectors.snapshotmatchers.{SnapshotAssertion, SnapshotFilename, SnapshotMatcher}
-import com.sparetimedevs.ami.core.{Measure, Part, ScorePartwise}
-import com.sparetimedevs.ami.mediaprocessor.{Errors, MediaProcessorImpl}
-import com.sparetimedevs.ami.mediaprocessor.file.Format
 import com.sparetimedevs.ami.MediaProcessor
-import componenttest.util.ComponentSpec
+import com.sparetimedevs.ami.componenttest.util.ComponentSpec
+import com.sparetimedevs.ami.core.{Measure, Part, ScorePartwise}
+import com.sparetimedevs.ami.mediaprocessor.file.Format
+import com.sparetimedevs.ami.mediaprocessor.{Errors, MediaProcessorImpl}
 import org.apache.commons.io.FileUtils
 import org.scalatest.BeforeAndAfterEach
 
 import java.io.File
 import java.nio.file.{Files, Paths}
+import scala.runtime.Scala3RunTime.nn
 import scala.util.Try
 
 abstract class GraphicNotationComponentSpec extends ComponentSpec {
@@ -36,7 +37,7 @@ abstract class GraphicNotationComponentSpec extends ComponentSpec {
   private given runtime: IORuntime = cats.effect.unsafe.IORuntime.global
 
   def createImages(xmlPath: String, outputFileFormat: Format): Either[Errors, List[String]] =
-    val musicXmlData: Array[Byte] = Files.readAllBytes(Paths.get(xmlPath))
+    val musicXmlData: Array[Byte] = Files.readAllBytes(Paths.get(xmlPath)).nn
     mediaProcessor
       .createImages(musicXmlData, outputFileFormat)
       .unsafeRunSync()
@@ -54,9 +55,9 @@ abstract class GraphicNotationComponentSpec extends ComponentSpec {
   private def getFilePrefix(xmlPath: String): String =
     val indexOfLastSlash = xmlPath.lastIndexOf('/')
     val indexOfLastDot = xmlPath.lastIndexOf('.')
-    xmlPath.substring(indexOfLastSlash + 1, indexOfLastDot)
+    xmlPath.substring(indexOfLastSlash + 1, indexOfLastDot).nn
 
   private def makeSureDirectoriesExists(filePath: String): Unit =
     val outputFile = new File(filePath)
-    outputFile.getParentFile.mkdirs()
+    outputFile.getParentFile.nn.mkdirs()
 }

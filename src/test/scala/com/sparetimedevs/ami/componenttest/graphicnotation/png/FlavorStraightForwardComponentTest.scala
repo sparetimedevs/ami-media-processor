@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 sparetimedevs and respective authors and developers.
+ * Copyright (c) 2022 sparetimedevs and respective authors and developers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package componenttest.graphicnotation.png
+package com.sparetimedevs.ami.componenttest.graphicnotation.png
 
 import com.commodityvectors.snapshotmatchers.{SnapshotAssertion, SnapshotFilename, SnapshotMatcher}
+import com.sparetimedevs.ami.MediaProcessor
+import com.sparetimedevs.ami.componenttest.graphicnotation.GraphicNotationComponentSpec
+import com.sparetimedevs.ami.componenttest.util.ComponentSpec
 import com.sparetimedevs.ami.core.{Measure, Part, ScorePartwise}
 import com.sparetimedevs.ami.mediaprocessor.file.Format
-import com.sparetimedevs.ami.MediaProcessor
-import componenttest.graphicnotation.GraphicNotationComponentSpec
-import componenttest.util.ComponentSpec
+import com.sparetimedevs.ami.test.util.getRightResultForTest
 import org.apache.commons.io.FileUtils
 import org.scalatest.BeforeAndAfterEach
-import test.getRightResultForTest
 
 import java.io.File
 import java.nio.file.{Files, Paths}
