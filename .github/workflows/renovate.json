@@ -1,12 +1,14 @@
 {
   "branchPrefix": "test-renovate/",
-  "dryRun": true,
   "username": "renovate-release",
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
   "onboarding": false,
   "requireConfig": false,
   "platform": "github",
   "includeForks": false,
+  "repositories": [
+    "sparetimedevs/ami-media-processor"
+  ],
   "packageRules": [
     {
       "matchUpdateTypes": [
