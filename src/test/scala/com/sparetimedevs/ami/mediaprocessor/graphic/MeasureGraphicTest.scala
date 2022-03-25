@@ -20,7 +20,7 @@ import cats.Eval
 import cats.effect.unsafe.IORuntime
 import com.sparetimedevs.ami.core.{Measure, MusicComponent}
 import com.sparetimedevs.ami.mediaprocessor.test.getBoundingBox
-import com.sparetimedevs.ami.test.util.getRightResultForTest
+import com.sparetimedevs.test.util.getRightResultForTest
 import doodle.algebra.generic.{ContextTransform, Renderable}
 import doodle.algebra.{Algebra, Picture, Size}
 import doodle.core.{BoundingBox, Color}

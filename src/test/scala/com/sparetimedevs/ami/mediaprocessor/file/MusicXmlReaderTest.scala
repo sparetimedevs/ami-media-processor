@@ -18,7 +18,7 @@ package com.sparetimedevs.ami.mediaprocessor.file
 
 import cats.effect.unsafe.IORuntime
 import com.sparetimedevs.ami.core.{AttributesType, Measure, NotImplementedMusicComponent, Note, Part, Pitch, Rest, ScorePartwise, Unpitched}
-import com.sparetimedevs.ami.test.util.getRightResultForTest
+import com.sparetimedevs.test.util.getRightResultForTest
 import doodle.core.*
 import doodle.effect.Writer.*
 import doodle.image.*

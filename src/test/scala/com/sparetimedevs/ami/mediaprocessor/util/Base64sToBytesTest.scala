@@ -20,7 +20,7 @@ import cats.data.EitherT
 import cats.effect.IO
 import cats.effect.unsafe.IORuntime
 import com.sparetimedevs.ami.test.data.{bytes1, bytes2}
-import com.sparetimedevs.ami.test.util.getRightResultForTest
+import com.sparetimedevs.test.util.getRightResultForTest
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

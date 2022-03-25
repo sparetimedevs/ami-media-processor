@@ -18,7 +18,7 @@ package com.sparetimedevs.ami.mediaprocessor.graphic
 
 import cats.effect.unsafe.IORuntime
 import com.sparetimedevs.ami.core.{Duration, Measure, Note, NoteType, Pitch, Step}
-import com.sparetimedevs.ami.test.util.getRightResultForTest
+import com.sparetimedevs.test.util.getRightResultForTest
 import doodle.image.Image
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
