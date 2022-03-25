@@ -2,7 +2,7 @@ import Dependencies._
 
 ThisBuild / organization := "com.sparetimedevs"
 ThisBuild / version := "0.0.1"
-ThisBuild / scalaVersion := "3.1.0"
+ThisBuild / scalaVersion := "3.1.1"
 
 scalacOptions ++= Seq(
   "-Yexplicit-nulls",
