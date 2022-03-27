@@ -23,7 +23,7 @@ import com.sparetimedevs.ami.componenttest.util.ComponentSpec
 import com.sparetimedevs.ami.core.{Measure, Part, ScorePartwise}
 import com.sparetimedevs.ami.mediaprocessor.file.Format
 import com.sparetimedevs.ami.mediaprocessor.{Errors, ValidationError}
-import com.sparetimedevs.ami.test.util.getLeftResultForTest
+import com.sparetimedevs.test.util.getLeftResultForTest
 import org.apache.commons.io.FileUtils
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.matchers.should.Matchers

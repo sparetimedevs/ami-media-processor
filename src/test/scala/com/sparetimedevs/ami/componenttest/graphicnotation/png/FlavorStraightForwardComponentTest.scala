@@ -22,7 +22,7 @@ import com.sparetimedevs.ami.componenttest.graphicnotation.GraphicNotationCompon
 import com.sparetimedevs.ami.componenttest.util.ComponentSpec
 import com.sparetimedevs.ami.core.{Measure, Part, ScorePartwise}
 import com.sparetimedevs.ami.mediaprocessor.file.Format
-import com.sparetimedevs.ami.test.util.getRightResultForTest
+import com.sparetimedevs.test.util.getRightResultForTest
 import org.apache.commons.io.FileUtils
 import org.scalatest.BeforeAndAfterEach
 

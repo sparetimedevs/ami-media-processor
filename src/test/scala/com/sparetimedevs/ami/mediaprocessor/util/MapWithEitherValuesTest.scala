@@ -17,7 +17,7 @@
 package com.sparetimedevs.ami.mediaprocessor.util
 
 import com.sparetimedevs.ami.mediaprocessor.{Errors, ValidationError, XmlParseError}
-import com.sparetimedevs.ami.test.util.{getLeftResultForTest, getRightResultForTest}
+import com.sparetimedevs.test.util.{getLeftResultForTest, getRightResultForTest}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
