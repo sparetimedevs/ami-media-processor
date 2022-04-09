@@ -1,7 +1,7 @@
 import sbt._
 
 object Dependencies {
-  lazy val scalaXml = "org.scala-lang.modules" %% "scala-xml" % "2.0.1"
+  lazy val scalaXml = "org.scala-lang.modules" %% "scala-xml" % "2.1.0"
   lazy val scalaParser = "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
   lazy val jaxbApi = "javax.xml.bind" % "jaxb-api" % "2.3.1"
   lazy val catsCore = "org.typelevel" %% "cats-core" % "2.7.0"
