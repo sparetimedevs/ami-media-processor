@@ -36,7 +36,7 @@ def validate(musicXmlData: Array[Byte], xsdPath: String): IOEitherErrorsOr[Node]
     Using
       .Manager { (use: Using.Manager) =>
         val maybeFeatures: Option[CatalogFeatures] = CatalogFeatures.defaults().nullableAsOption
-        val maybeCatalogFileUri: Option[URI] = new File("src/main/resources/catalog.xml").toURI.nullableAsOption
+        val maybeCatalogFileUri: Option[URI] = new File("src/main/resources/musicxml_4_0/schema/catalog.xml").toURI.nullableAsOption
         def catalogResolver(features: CatalogFeatures, catalogFileUri: URI): CatalogResolver | Null = CatalogManager.catalogResolver(features, catalogFileUri)
         val maybeCatalogResolver: Option[CatalogResolver] = (maybeFeatures, maybeCatalogFileUri)
           .apWith { Some(catalogResolver) }
