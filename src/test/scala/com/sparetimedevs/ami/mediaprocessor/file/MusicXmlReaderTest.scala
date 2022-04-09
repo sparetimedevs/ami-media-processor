@@ -32,7 +32,7 @@ import scala.runtime.Scala3RunTime.nn
 
 class MusicXmlReaderTest extends AnyFlatSpec {
 
-  private val xsdPath = "src/main/resources/musicxml_3_1/schema/musicxml.xsd"
+  private val xsdPath = "src/main/resources/musicxml_4_0/schema/musicxml.xsd"
 
   private given runtime: IORuntime = cats.effect.unsafe.IORuntime.global
 
