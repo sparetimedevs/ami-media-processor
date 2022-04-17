@@ -40,10 +40,8 @@ import scala.util.Try
 
 class MediaProcessorImpl extends MediaProcessor {
 
-  private val xsdPath = "src/main/resources/musicxml_4_0/schema/musicxml.xsd"
-
   override def createImages(musicXmlData: Array[Byte], outputFileFormat: Format): IO[Either[Errors, Map[String, Array[Byte]]]] =
-    read(musicXmlData, xsdPath)
+    read(musicXmlData)
       .map { (s: ScorePartwise) => getMeasures(s) }
       .flatMap { (measuresForParts: Map[String, Seq[Measure]]) =>
         createImagesForParts(measuresForParts)

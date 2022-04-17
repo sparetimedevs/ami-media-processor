@@ -28,8 +28,8 @@ import scalaxb.{ElemName, XMLFormat}
 import java.io.File
 import scala.xml.{Node, NodeSeq}
 
-private[mediaprocessor] def read(musicXmlData: Array[Byte], xsdPath: String): IOEitherErrorsOr[ScorePartwise] =
-  validate(musicXmlData, xsdPath)
+private[mediaprocessor] def read(musicXmlData: Array[Byte]): IOEitherErrorsOr[ScorePartwise] =
+  validate(musicXmlData)
     .flatMap((rootElement: Node) => ScorePartwiseXmlProtocol.fromXml(rootElement))
     .map((scorePartwiseXml: Scoreu45partwise) => toDomainModel(scorePartwiseXml))
 

@@ -32,15 +32,13 @@ import scala.runtime.Scala3RunTime.nn
 
 class MusicXmlReaderTest extends AnyFlatSpec {
 
-  private val xsdPath = "src/main/resources/musicxml_4_0/schema/musicxml.xsd"
-
   private given runtime: IORuntime = cats.effect.unsafe.IORuntime.global
 
   it should "work with 0" in {
     val xmlPath = "src/test/resources/lilypond_2_20_regression_musicxml/43a-PianoStaff.xml"
     val musicXmlData: Array[Byte] = Files.readAllBytes(Paths.get(xmlPath)).nn
 
-    val result: ScorePartwise = read(musicXmlData, xsdPath).getRightResultForTest
+    val result: ScorePartwise = read(musicXmlData).getRightResultForTest
 
     val steps: Seq[String] = getNotePitchStep(result)
 
@@ -59,7 +57,7 @@ class MusicXmlReaderTest extends AnyFlatSpec {
     val xmlPath = "src/test/resources/lilypond_2_20_regression_musicxml/46c-Midmeasure-Clef.xml"
     val musicXmlData: Array[Byte] = Files.readAllBytes(Paths.get(xmlPath)).nn
 
-    val result: ScorePartwise = read(musicXmlData, xsdPath).getRightResultForTest
+    val result: ScorePartwise = read(musicXmlData).getRightResultForTest
 
     val steps: Seq[String] = getNotePitchStep(result)
 
