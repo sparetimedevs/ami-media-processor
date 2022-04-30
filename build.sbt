@@ -17,7 +17,7 @@ lazy val testUtil = (project in file("test-util"))
 lazy val core = (project in file("ami-core"))
   .settings(
     name := "ami-core",
-    libraryDependencies ++= Seq(scalaTest)
+    libraryDependencies ++= Seq(scalaTest, musicProtobuf)
   )
   .dependsOn(testUtil)
   .aggregate(testUtil)
