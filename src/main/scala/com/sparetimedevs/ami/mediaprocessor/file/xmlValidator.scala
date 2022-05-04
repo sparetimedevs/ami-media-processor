@@ -22,7 +22,7 @@ import com.sparetimedevs.ami.core.util.{getMessage, nullableAsOption}
 import com.sparetimedevs.ami.mediaprocessor.{Errors, IOEitherErrorsOr, ValidationError, asIOEitherErrorsOrT}
 
 import java.io.{ByteArrayInputStream, File, FileInputStream, InputStream}
-import java.net.URI
+import java.net.{URI, URL}
 import javax.xml.XMLConstants
 import javax.xml.catalog.{CatalogFeatures, CatalogManager, CatalogResolver}
 import javax.xml.transform.sax.{SAXResult, SAXSource}
@@ -31,12 +31,12 @@ import scala.util.Using
 import scala.xml.parsing.NoBindingFactoryAdapter
 import scala.xml.{InputSource, Node}
 
-def validate(musicXmlData: Array[Byte], xsdPath: String): IOEitherErrorsOr[Node] =
+def validate(musicXmlData: Array[Byte]): IOEitherErrorsOr[Node] =
   IO {
     Using
       .Manager { (use: Using.Manager) =>
         val maybeFeatures: Option[CatalogFeatures] = CatalogFeatures.defaults().nullableAsOption
-        val maybeCatalogFileUri: Option[URI] = new File("src/main/resources/musicxml_4_0/schema/catalog.xml").toURI.nullableAsOption
+        val maybeCatalogFileUri: Option[URI] = getClass.getResource("/musicxml_4_0/schema/catalog.xml").nullableAsOption.flatMap(_.toURI.nullableAsOption)
         def catalogResolver(features: CatalogFeatures, catalogFileUri: URI): CatalogResolver | Null = CatalogManager.catalogResolver(features, catalogFileUri)
         val maybeCatalogResolver: Option[CatalogResolver] = (maybeFeatures, maybeCatalogFileUri)
           .apWith { Some(catalogResolver) }
@@ -53,8 +53,10 @@ def validate(musicXmlData: Array[Byte], xsdPath: String): IOEitherErrorsOr[Node]
         val inputSource: InputSource = new InputSource(inputStream)
         val source: SAXSource = new SAXSource(inputSource)
 
+        val maybeXsd: Option[URL] = getClass.getResource("/musicxml_4_0/schema/musicxml.xsd").nullableAsOption
+
         maybeFactory
-          .flatMap { factory => factory.newSchema(new File(xsdPath)).nullableAsOption }
+          .flatMap { factory => maybeXsd.flatMap { xsd => factory.newSchema(xsd).nullableAsOption } }
           .flatMap { schema => schema.newValidator().nullableAsOption }
           .foreach { validator => validator.validate(source, saxResult) }
         adapter.rootElem

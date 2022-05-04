@@ -35,7 +35,6 @@ import scala.Array.emptyByteArray
 object AmiMediaProcessorTestApplication extends IOApp {
 
   private val xmlPath = "src/test/resources/lilypond_2_20_regression_musicxml/21a-Chord-Basic.xml"
-  private val xsdPath = "src/main/resources/musicxml_4_0/schema/musicxml.xsd"
 
   private given implicitRuntime: IORuntime = this.runtime
 
