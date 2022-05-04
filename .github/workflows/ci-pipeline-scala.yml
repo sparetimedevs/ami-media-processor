@@ -1,0 +1,34 @@
+name: Reusable Scala CI Pipeline
+
+on:
+  workflow_call:
+    inputs:
+      java-version:
+        required: true
+        type: number
+
+jobs:
+  check-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: ${{ inputs.java-version }}
+      - name: Check format
+        run: sbt scalafmtCheckAll
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: ${{ inputs.java-version }}
+      - name: Build and Test
+        run: sbt -v +test

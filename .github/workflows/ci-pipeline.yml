@@ -1,29 +1,11 @@
 name: CI Pipeline
+
 on:
   workflow_dispatch:
   pull_request:
+
 jobs:
-  check-format:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: temurin
-          java-version: 11
-      - name: Check format
-        run: sbt scalafmtCheckAll
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: temurin
-          java-version: 11
-      - name: Build and Test
-        run: sbt -v +test
+  ci-pipeline:
+    uses: ./.github/workflows/ci-pipeline-scala.yml
+    with:
+      java-version: 11
