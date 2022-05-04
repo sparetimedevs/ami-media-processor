@@ -7,3 +7,5 @@ on:
 jobs:
   ci-pipeline:
     uses: ./.github/workflows/ci-pipeline-scala.yml
+    with:
+      java-version: 11

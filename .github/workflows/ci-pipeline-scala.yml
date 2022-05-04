@@ -2,6 +2,10 @@ name: Reusable Scala CI Pipeline
 
 on:
   workflow_call:
+    inputs:
+      java-version:
+        required: true
+        type: number
 
 jobs:
   check-format:
@@ -13,7 +17,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: temurin
-          java-version: 11
+          java-version: ${{ inputs.java-version }}
       - name: Check format
         run: sbt scalafmtCheckAll
   test:
@@ -25,6 +29,6 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: temurin
-          java-version: 11
+          java-version: ${{ inputs.java-version }}
       - name: Build and Test
         run: sbt -v +test
