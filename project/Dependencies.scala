@@ -5,7 +5,7 @@ object Dependencies {
   lazy val scalaParser = "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
   lazy val jaxbApi = "javax.xml.bind" % "jaxb-api" % "2.3.1"
   lazy val catsCore = "org.typelevel" %% "cats-core" % "2.7.0"
-  lazy val catsEffect = "org.typelevel" %% "cats-effect" % "3.3.8"
+  lazy val catsEffect = "org.typelevel" %% "cats-effect" % "3.4-389-3862cf0"
   lazy val doodle = "org.creativescala" %% "doodle" % "0.10.1"
   lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.12" % "test"
   lazy val diffUtils = "com.googlecode.java-diff-utils" % "diffutils" % "1.3.0" // needed for scalatest-snapshot-matcher-core dependency, included in /lib/scalatest-snapshot-matcher-core_3.jar
