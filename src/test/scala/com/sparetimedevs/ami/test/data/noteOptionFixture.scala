@@ -16,11 +16,12 @@
 
 package com.sparetimedevs.ami.test.data
 
-import com.sparetimedevs.ami.core.{Duration, NoteType, Pitch, Rest, Step}
+import com.sparetimedevs.ami.core.{Duration, NoteType, Octave, Pitch, Rest, Step}
 
-def createPitch(step: Step, noteType: NoteType): Pitch =
+def createPitch(step: Step, octave: Octave = Octave.Default, noteType: NoteType): Pitch =
   Pitch(
     step = step,
+    octave = octave,
     noteType = noteType,
     duration = Duration(noteType.value * 4), // This assumes the denominator of the time signature is 4. For instance a time signature of 4/4.
     isNotePartOfChord = false

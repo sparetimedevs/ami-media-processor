@@ -16,7 +16,7 @@
 
 package com.sparetimedevs.ami.mediaprocessor.graphic.vector
 
-import com.sparetimedevs.ami.core.{Duration, Measure, Note, NoteOption, NoteType, Pitch, Rest, Step}
+import com.sparetimedevs.ami.core.{Duration, Measure, Note, NoteOption, NoteType, Octave, Pitch, Rest, Step}
 import com.sparetimedevs.ami.test.data.{createPitch, createRest}
 import doodle.image.Image
 import org.scalatest.flatspec.AnyFlatSpec
@@ -204,6 +204,58 @@ class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
       NoteVectors(Vector(50.0, -7.5), Vector(100.0, -7.5)),
       NoteVectors(Vector(100.0, -7.5), Vector(200.0, -7.5)),
       NoteVectors(Vector(200.0, -7.5), Vector(400.0, -7.5))
+    )
+  }
+
+  it should "create NoteVectors for all note steps in C ionian mode (C major)" in {
+    val noteOptions: Seq[NoteOption] = Seq(
+      createPitch(Step.C, noteType = NoteType.Eighth),
+      createPitch(Step.D, noteType = NoteType.Eighth),
+      createPitch(Step.E, noteType = NoteType.Eighth),
+      createPitch(Step.F, noteType = NoteType.Eighth),
+      createPitch(Step.G, noteType = NoteType.Eighth),
+      createPitch(Step.A, octave = Octave(5), noteType = NoteType.Eighth),
+      createPitch(Step.B, octave = Octave(5), noteType = NoteType.Eighth),
+      createPitch(Step.C, octave = Octave(5), noteType = NoteType.Eighth)
+    )
+
+    val result: Seq[NoteVectors] = noteOptions.asNotesVectors
+
+    result shouldBe Seq(
+      NoteVectors(Vector(0.0, 2.5), Vector(50.0, 2.5)),
+      NoteVectors(Vector(50.0, 3.5), Vector(100.0, 3.5)),
+      NoteVectors(Vector(100.0, 4.5), Vector(150.0, 4.5)),
+      NoteVectors(Vector(150.0, 5.0), Vector(200.0, 5.0)),
+      NoteVectors(Vector(200.0, 6.0), Vector(250.0, 6.0)),
+      NoteVectors(Vector(250.0, 7.0), Vector(300.0, 7.0)),
+      NoteVectors(Vector(300.0, 8.0), Vector(350.0, 8.0)),
+      NoteVectors(Vector(350.0, 8.5), Vector(400.0, 8.5))
+    )
+  }
+
+  it should "create NoteVectors for all note steps in C dorian mode" in {
+    val noteOptions: Seq[NoteOption] = Seq(
+      createPitch(Step.C, noteType = NoteType.Eighth),
+      createPitch(Step.D, noteType = NoteType.Eighth),
+      createPitch(Step.EFlat, noteType = NoteType.Eighth),
+      createPitch(Step.F, noteType = NoteType.Eighth),
+      createPitch(Step.G, noteType = NoteType.Eighth),
+      createPitch(Step.A, octave = Octave(5), noteType = NoteType.Eighth),
+      createPitch(Step.BFlat, octave = Octave(5), noteType = NoteType.Eighth),
+      createPitch(Step.C, octave = Octave(5), noteType = NoteType.Eighth)
+    )
+
+    val result: Seq[NoteVectors] = noteOptions.asNotesVectors
+
+    result shouldBe Seq(
+      NoteVectors(Vector(0.0, 2.5), Vector(50.0, 2.5)),
+      NoteVectors(Vector(50.0, 3.5), Vector(100.0, 3.5)),
+      NoteVectors(Vector(100.0, 4.0), Vector(150.0, 4.0)),
+      NoteVectors(Vector(150.0, 5.0), Vector(200.0, 5.0)),
+      NoteVectors(Vector(200.0, 6.0), Vector(250.0, 6.0)),
+      NoteVectors(Vector(250.0, 7.0), Vector(300.0, 7.0)),
+      NoteVectors(Vector(300.0, 7.5), Vector(350.0, 7.5)),
+      NoteVectors(Vector(350.0, 8.5), Vector(400.0, 8.5))
     )
   }
 

@@ -16,7 +16,7 @@
 
 package com.sparetimedevs.ami.mediaprocessor.graphic.vector
 
-import com.sparetimedevs.ami.core.{Note, NoteOption, NoteType, Pitch, Rest, Step, Unpitched}
+import com.sparetimedevs.ami.core.{Note, NoteOption, NoteType, Pitch, Rest, Step, Unpitched, toDouble}
 import com.sparetimedevs.ami.mediaprocessor.graphic.vector.Vector
 import com.sparetimedevs.ami.mediaprocessor.graphic.{GraphicProperties, XProperties, YProperties}
 
@@ -51,12 +51,17 @@ private[graphic] def vectorComponentXAtEnd(noteOption: NoteOption, currentX: Dou
   currentX + (noteOption.noteType.value * 400)
 
 private[graphic] def vectorComponentY(pitch: Pitch): Double =
-  pitch.step match {
-    case Step.A => 1
-    case Step.B => 2
-    case Step.C => 2.5
-    case Step.D => 3.5
-    case Step.E => 4.5
-    case Step.F => 5
-    case Step.G => 6
+  vectorComponentY(pitch.step) + ((pitch.octave.toDouble - 4) * 6)
+
+private[graphic] def vectorComponentY(step: Step): Double =
+  step match {
+    case Step.A     => 1
+    case Step.BFlat => 1.5
+    case Step.B     => 2
+    case Step.C     => 2.5
+    case Step.D     => 3.5
+    case Step.EFlat => 4
+    case Step.E     => 4.5
+    case Step.F     => 5
+    case Step.G     => 6
   }

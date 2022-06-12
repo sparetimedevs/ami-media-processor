@@ -17,4 +17,4 @@
 package com.sparetimedevs.ami.core
 
 enum Step:
-  case A, B, C, D, E, F, G
+  case A, BFlat, B, C, D, EFlat, E, F, G

@@ -26,3 +26,5 @@ object Octave:
   def apply(value: Byte): Octave = value
 
   val Default: Octave = 4
+
+extension (octave: Octave) def toDouble: Double = octave.doubleValue
