@@ -33,10 +33,10 @@ import scala.util.Try
 class FlavorStraightForwardComponentTest extends GraphicNotationComponentSpec {
 
   allTestMusicXmlFiles.foreach { musicXmlFile =>
-    it should s"match snapshots derived from $musicXmlFile" in { implicit testData: FixtureParam =>
+    it should s"match snapshots derived from ${musicXmlFile._2}" in { implicit testData: FixtureParam =>
       implicit val matcher: SnapshotMatcher = this
 
-      val xmlPath = s"src/test/resources/lilypond_2_20_regression_musicxml/$musicXmlFile"
+      val xmlPath = s"${musicXmlFile._1}${musicXmlFile._2}"
 
       val filenamesOfResults: Seq[String] = createImages(xmlPath, Format.Png).getRightResultForTest
 

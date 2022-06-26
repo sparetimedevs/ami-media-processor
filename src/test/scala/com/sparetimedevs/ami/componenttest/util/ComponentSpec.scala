@@ -31,9 +31,19 @@ trait ComponentSpec extends FixtureAnyFlatSpec with SnapshotMatcher with BeforeA
 
   private def cleanupTestOutput(): Unit = Try(FileUtils.deleteDirectory(new File("target/test-output")))
 
-  protected val allTestMusicXmlFiles: Seq[String] = Seq(
+  private val lilypondRegressionPath = "src/test/resources/lilypond_2_20_regression_musicxml/"
+  private val diatonicModesPath = "src/test/resources/diatonic_modes/"
+
+  private val lilypondRegressionFiles: Seq[(String, String)] = Seq(
     "43a-PianoStaff.xml",
     "46c-Midmeasure-Clef.xml",
     "21b-Chords-TwoNotes.xml"
-  )
+  ).map(filename => lilypondRegressionPath -> filename)
+
+  private val diatonicModesFiles: Seq[(String, String)] = Seq(
+    "c_ionian_mode.musicxml",
+    "c_dorian_mode.musicxml"
+  ).map(filename => diatonicModesPath -> filename)
+
+  protected val allTestMusicXmlFiles: Seq[(String, String)] = lilypondRegressionFiles ++ diatonicModesFiles
 }
