@@ -16,7 +16,7 @@
 
 package com.sparetimedevs.ami.mediaprocessor.file
 
-import com.sparetimedevs.ami.core.{AttributesType, BeatType, Beats, Duration, EditorialSequence, Measure, MusicComponent, NotImplementedMusicComponent, Note, NoteOption, NoteType, Part, Pitch, Rest, ScorePartwise, Step, Time, TimeOption, TimeSignature, Unpitched}
+import com.sparetimedevs.ami.core.{AttributesType, BeatType, Beats, Duration, EditorialSequence, Measure, MusicComponent, NotImplementedMusicComponent, Note, NoteOption, NoteType, Octave, Part, Pitch, Rest, ScorePartwise, Step, Time, TimeOption, TimeSignature, Unpitched}
 
 private[mediaprocessor] def toDomainModel(scorePartwiseXml: musicxml.Scoreu45partwise): ScorePartwise = {
   val parts: Seq[Part] = scorePartwiseXml.part.map((partXml: musicxml.Part) => toDomainModel(partXml))
@@ -109,16 +109,23 @@ private def toDomainModel(noteTypeValueXml: Option[musicxml.Noteu45type]): Optio
   }
 
 private def toDomainModel(pitchXml: musicxml.Pitch, noteType: NoteType, durationSequenceXml: musicxml.DurationSequence, isNotePartOfChord: Boolean): Pitch =
-  val duration = Duration(durationSequenceXml.duration)
+  val octave: Octave = getOctaveFrom(pitchXml)
+  val duration: Duration = getDurationFrom(durationSequenceXml)
   pitchXml.step match {
-    case musicxml.A      => Pitch(Step.A, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
-    case musicxml.B      => Pitch(Step.B, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
-    case musicxml.CValue => Pitch(Step.C, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
-    case musicxml.D      => Pitch(Step.D, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
-    case musicxml.E      => Pitch(Step.E, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
-    case musicxml.FValue => Pitch(Step.F, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
-    case musicxml.GValue => Pitch(Step.G, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
+    case musicxml.A      => Pitch(step = Step.A, octave = octave, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
+    case musicxml.B      => Pitch(step = Step.B, octave = octave, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
+    case musicxml.CValue => Pitch(step = Step.C, octave = octave, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
+    case musicxml.D      => Pitch(step = Step.D, octave = octave, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
+    case musicxml.E      => Pitch(step = Step.E, octave = octave, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
+    case musicxml.FValue => Pitch(step = Step.F, octave = octave, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
+    case musicxml.GValue => Pitch(step = Step.G, octave = octave, noteType = noteType, duration = duration, isNotePartOfChord = isNotePartOfChord)
   }
+
+private def getOctaveFrom(pitchXml: musicxml.Pitch): Octave =
+  Octave(pitchXml.octave.byteValue)
+
+private def getDurationFrom(durationSequenceXml: musicxml.DurationSequence): Duration =
+  Duration(durationSequenceXml.duration)
 
 private def toDomainModel(durationSequenceXml: musicxml.DurationSequence): Duration =
   Duration(durationSequenceXml.duration)

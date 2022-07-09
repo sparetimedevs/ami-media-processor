@@ -29,7 +29,7 @@ class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
 
     val result: Seq[NoteVectors] = noteOptions.asNotesVectors
 
-    result shouldBe Seq(NoteVectors(Vector(0.0, 2.5), Vector(400.0, 2.5)))
+    result shouldBe Seq(NoteVectors(Vector(0.0, 26.5), Vector(400.0, 26.5)))
   }
 
   it should "create NoteVectors for two notes" in {
@@ -40,7 +40,7 @@ class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
 
     val result: Seq[NoteVectors] = noteOptions.asNotesVectors
 
-    result shouldBe Seq(NoteVectors(Vector(0.0, 2.5), Vector(200.0, 2.5)), NoteVectors(Vector(200.0, 1), Vector(400.0, 1)))
+    result shouldBe Seq(NoteVectors(Vector(0.0, 26.5), Vector(200.0, 26.5)), NoteVectors(Vector(200.0, 25), Vector(400.0, 25)))
   }
 
   it should "create NoteVectors for rests" in {
@@ -54,9 +54,9 @@ class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
     val result: Seq[NoteVectors] = noteOptions.asNotesVectors
 
     result shouldBe Seq(
-      NoteVectors(Vector(0.0, 6.0), Vector(100.0, 6.0)),
+      NoteVectors(Vector(0.0, 30.0), Vector(100.0, 30.0)),
       NoteVectors(Vector(100.0, -7.5), Vector(200.0, -7.5)),
-      NoteVectors(Vector(200.0, 3.5), Vector(300.0, 3.5)),
+      NoteVectors(Vector(200.0, 27.5), Vector(300.0, 27.5)),
       NoteVectors(Vector(300.0, -7.5), Vector(400.0, -7.5))
     )
   }
@@ -136,69 +136,69 @@ class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
     val result: Seq[NoteVectors] = noteOptions.asNotesVectors
 
     result shouldBe Seq(
-      NoteVectors(Vector(0.0, 1.0), Vector(0.390625, 1.0)),
-      NoteVectors(Vector(0.390625, 2.0), Vector(0.78125, 2.0)),
-      NoteVectors(Vector(0.78125, 2.5), Vector(1.171875, 2.5)),
-      NoteVectors(Vector(1.171875, 3.5), Vector(1.5625, 3.5)),
-      NoteVectors(Vector(1.5625, 4.5), Vector(1.953125, 4.5)),
-      NoteVectors(Vector(1.953125, 5.0), Vector(2.34375, 5.0)),
-      NoteVectors(Vector(2.34375, 6.0), Vector(2.734375, 6.0)),
+      NoteVectors(Vector(0.0, 25.0), Vector(0.390625, 25.0)),
+      NoteVectors(Vector(0.390625, 26.0), Vector(0.78125, 26.0)),
+      NoteVectors(Vector(0.78125, 26.5), Vector(1.171875, 26.5)),
+      NoteVectors(Vector(1.171875, 27.5), Vector(1.5625, 27.5)),
+      NoteVectors(Vector(1.5625, 28.5), Vector(1.953125, 28.5)),
+      NoteVectors(Vector(1.953125, 29.0), Vector(2.34375, 29.0)),
+      NoteVectors(Vector(2.34375, 30.0), Vector(2.734375, 30.0)),
       NoteVectors(Vector(2.734375, -7.5), Vector(3.125, -7.5)),
-      NoteVectors(Vector(3.125, 1.0), Vector(3.515625, 1.0)),
-      NoteVectors(Vector(3.515625, 2.0), Vector(3.90625, 2.0)),
-      NoteVectors(Vector(3.90625, 2.5), Vector(4.296875, 2.5)),
-      NoteVectors(Vector(4.296875, 3.5), Vector(4.6875, 3.5)),
-      NoteVectors(Vector(4.6875, 4.5), Vector(5.078125, 4.5)),
-      NoteVectors(Vector(5.078125, 5.0), Vector(5.46875, 5.0)),
-      NoteVectors(Vector(5.46875, 6.0), Vector(5.859375, 6.0)),
+      NoteVectors(Vector(3.125, 25.0), Vector(3.515625, 25.0)),
+      NoteVectors(Vector(3.515625, 26.0), Vector(3.90625, 26.0)),
+      NoteVectors(Vector(3.90625, 26.5), Vector(4.296875, 26.5)),
+      NoteVectors(Vector(4.296875, 27.5), Vector(4.6875, 27.5)),
+      NoteVectors(Vector(4.6875, 28.5), Vector(5.078125, 28.5)),
+      NoteVectors(Vector(5.078125, 29.0), Vector(5.46875, 29.0)),
+      NoteVectors(Vector(5.46875, 30.0), Vector(5.859375, 30.0)),
       NoteVectors(Vector(5.859375, -7.5), Vector(6.25, -7.5)),
-      NoteVectors(Vector(6.25, 1.0), Vector(6.640625, 1.0)),
-      NoteVectors(Vector(6.640625, 2.0), Vector(7.03125, 2.0)),
-      NoteVectors(Vector(7.03125, 2.5), Vector(7.421875, 2.5)),
-      NoteVectors(Vector(7.421875, 3.5), Vector(7.8125, 3.5)),
-      NoteVectors(Vector(7.8125, 4.5), Vector(8.203125, 4.5)),
-      NoteVectors(Vector(8.203125, 5.0), Vector(8.59375, 5.0)),
-      NoteVectors(Vector(8.59375, 6.0), Vector(8.984375, 6.0)),
+      NoteVectors(Vector(6.25, 25.0), Vector(6.640625, 25.0)),
+      NoteVectors(Vector(6.640625, 26.0), Vector(7.03125, 26.0)),
+      NoteVectors(Vector(7.03125, 26.5), Vector(7.421875, 26.5)),
+      NoteVectors(Vector(7.421875, 27.5), Vector(7.8125, 27.5)),
+      NoteVectors(Vector(7.8125, 28.5), Vector(8.203125, 28.5)),
+      NoteVectors(Vector(8.203125, 29.0), Vector(8.59375, 29.0)),
+      NoteVectors(Vector(8.59375, 30.0), Vector(8.984375, 30.0)),
       NoteVectors(Vector(8.984375, -7.5), Vector(9.375, -7.5)),
-      NoteVectors(Vector(9.375, 1.0), Vector(9.765625, 1.0)),
-      NoteVectors(Vector(9.765625, 2.0), Vector(10.15625, 2.0)),
-      NoteVectors(Vector(10.15625, 2.5), Vector(10.546875, 2.5)),
-      NoteVectors(Vector(10.546875, 3.5), Vector(10.9375, 3.5)),
-      NoteVectors(Vector(10.9375, 4.5), Vector(11.328125, 4.5)),
-      NoteVectors(Vector(11.328125, 5.0), Vector(11.71875, 5.0)),
-      NoteVectors(Vector(11.71875, 6.0), Vector(12.109375, 6.0)),
+      NoteVectors(Vector(9.375, 25.0), Vector(9.765625, 25.0)),
+      NoteVectors(Vector(9.765625, 26.0), Vector(10.15625, 26.0)),
+      NoteVectors(Vector(10.15625, 26.5), Vector(10.546875, 26.5)),
+      NoteVectors(Vector(10.546875, 27.5), Vector(10.9375, 27.5)),
+      NoteVectors(Vector(10.9375, 28.5), Vector(11.328125, 28.5)),
+      NoteVectors(Vector(11.328125, 29.0), Vector(11.71875, 29.0)),
+      NoteVectors(Vector(11.71875, 30.0), Vector(12.109375, 30.0)),
       NoteVectors(Vector(12.109375, -7.5), Vector(12.5, -7.5)),
-      NoteVectors(Vector(12.5, 1.0), Vector(12.890625, 1.0)),
-      NoteVectors(Vector(12.890625, 2.0), Vector(13.28125, 2.0)),
-      NoteVectors(Vector(13.28125, 2.5), Vector(13.671875, 2.5)),
-      NoteVectors(Vector(13.671875, 3.5), Vector(14.0625, 3.5)),
-      NoteVectors(Vector(14.0625, 4.5), Vector(14.453125, 4.5)),
-      NoteVectors(Vector(14.453125, 5.0), Vector(14.84375, 5.0)),
-      NoteVectors(Vector(14.84375, 6.0), Vector(15.234375, 6.0)),
+      NoteVectors(Vector(12.5, 25.0), Vector(12.890625, 25.0)),
+      NoteVectors(Vector(12.890625, 26.0), Vector(13.28125, 26.0)),
+      NoteVectors(Vector(13.28125, 26.5), Vector(13.671875, 26.5)),
+      NoteVectors(Vector(13.671875, 27.5), Vector(14.0625, 27.5)),
+      NoteVectors(Vector(14.0625, 28.5), Vector(14.453125, 28.5)),
+      NoteVectors(Vector(14.453125, 29.0), Vector(14.84375, 29.0)),
+      NoteVectors(Vector(14.84375, 30.0), Vector(15.234375, 30.0)),
       NoteVectors(Vector(15.234375, -7.5), Vector(15.625, -7.5)),
-      NoteVectors(Vector(15.625, 1.0), Vector(16.015625, 1.0)),
-      NoteVectors(Vector(16.015625, 2.0), Vector(16.40625, 2.0)),
-      NoteVectors(Vector(16.40625, 2.5), Vector(16.796875, 2.5)),
-      NoteVectors(Vector(16.796875, 3.5), Vector(17.1875, 3.5)),
-      NoteVectors(Vector(17.1875, 4.5), Vector(17.578125, 4.5)),
-      NoteVectors(Vector(17.578125, 5.0), Vector(17.96875, 5.0)),
-      NoteVectors(Vector(17.96875, 6.0), Vector(18.359375, 6.0)),
+      NoteVectors(Vector(15.625, 25.0), Vector(16.015625, 25.0)),
+      NoteVectors(Vector(16.015625, 26.0), Vector(16.40625, 26.0)),
+      NoteVectors(Vector(16.40625, 26.5), Vector(16.796875, 26.5)),
+      NoteVectors(Vector(16.796875, 27.5), Vector(17.1875, 27.5)),
+      NoteVectors(Vector(17.1875, 28.5), Vector(17.578125, 28.5)),
+      NoteVectors(Vector(17.578125, 29.0), Vector(17.96875, 29.0)),
+      NoteVectors(Vector(17.96875, 30.0), Vector(18.359375, 30.0)),
       NoteVectors(Vector(18.359375, -7.5), Vector(18.75, -7.5)),
-      NoteVectors(Vector(18.75, 1.0), Vector(19.140625, 1.0)),
-      NoteVectors(Vector(19.140625, 2.0), Vector(19.53125, 2.0)),
-      NoteVectors(Vector(19.53125, 2.5), Vector(19.921875, 2.5)),
-      NoteVectors(Vector(19.921875, 3.5), Vector(20.3125, 3.5)),
-      NoteVectors(Vector(20.3125, 4.5), Vector(20.703125, 4.5)),
-      NoteVectors(Vector(20.703125, 5.0), Vector(21.09375, 5.0)),
-      NoteVectors(Vector(21.09375, 6.0), Vector(21.484375, 6.0)),
+      NoteVectors(Vector(18.75, 25.0), Vector(19.140625, 25.0)),
+      NoteVectors(Vector(19.140625, 26.0), Vector(19.53125, 26.0)),
+      NoteVectors(Vector(19.53125, 26.5), Vector(19.921875, 26.5)),
+      NoteVectors(Vector(19.921875, 27.5), Vector(20.3125, 27.5)),
+      NoteVectors(Vector(20.3125, 28.5), Vector(20.703125, 28.5)),
+      NoteVectors(Vector(20.703125, 29.0), Vector(21.09375, 29.0)),
+      NoteVectors(Vector(21.09375, 30.0), Vector(21.484375, 30.0)),
       NoteVectors(Vector(21.484375, -7.5), Vector(21.875, -7.5)),
-      NoteVectors(Vector(21.875, 1.0), Vector(22.265625, 1.0)),
-      NoteVectors(Vector(22.265625, 2.0), Vector(22.65625, 2.0)),
-      NoteVectors(Vector(22.65625, 2.5), Vector(23.046875, 2.5)),
-      NoteVectors(Vector(23.046875, 3.5), Vector(23.4375, 3.5)),
-      NoteVectors(Vector(23.4375, 4.5), Vector(23.828125, 4.5)),
-      NoteVectors(Vector(23.828125, 5.0), Vector(24.21875, 5.0)),
-      NoteVectors(Vector(24.21875, 6.0), Vector(24.609375, 6.0)),
+      NoteVectors(Vector(21.875, 25.0), Vector(22.265625, 25.0)),
+      NoteVectors(Vector(22.265625, 26.0), Vector(22.65625, 26.0)),
+      NoteVectors(Vector(22.65625, 26.5), Vector(23.046875, 26.5)),
+      NoteVectors(Vector(23.046875, 27.5), Vector(23.4375, 27.5)),
+      NoteVectors(Vector(23.4375, 28.5), Vector(23.828125, 28.5)),
+      NoteVectors(Vector(23.828125, 29.0), Vector(24.21875, 29.0)),
+      NoteVectors(Vector(24.21875, 30.0), Vector(24.609375, 30.0)),
       NoteVectors(Vector(24.609375, -7.5), Vector(25.0, -7.5)),
       NoteVectors(Vector(25.0, -7.5), Vector(50.0, -7.5)),
       NoteVectors(Vector(50.0, -7.5), Vector(100.0, -7.5)),
@@ -222,14 +222,14 @@ class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
     val result: Seq[NoteVectors] = noteOptions.asNotesVectors
 
     result shouldBe Seq(
-      NoteVectors(Vector(0.0, 2.5), Vector(50.0, 2.5)),
-      NoteVectors(Vector(50.0, 3.5), Vector(100.0, 3.5)),
-      NoteVectors(Vector(100.0, 4.5), Vector(150.0, 4.5)),
-      NoteVectors(Vector(150.0, 5.0), Vector(200.0, 5.0)),
-      NoteVectors(Vector(200.0, 6.0), Vector(250.0, 6.0)),
-      NoteVectors(Vector(250.0, 7.0), Vector(300.0, 7.0)),
-      NoteVectors(Vector(300.0, 8.0), Vector(350.0, 8.0)),
-      NoteVectors(Vector(350.0, 8.5), Vector(400.0, 8.5))
+      NoteVectors(Vector(0.0, 26.5), Vector(50.0, 26.5)),
+      NoteVectors(Vector(50.0, 27.5), Vector(100.0, 27.5)),
+      NoteVectors(Vector(100.0, 28.5), Vector(150.0, 28.5)),
+      NoteVectors(Vector(150.0, 29.0), Vector(200.0, 29.0)),
+      NoteVectors(Vector(200.0, 30.0), Vector(250.0, 30.0)),
+      NoteVectors(Vector(250.0, 31.0), Vector(300.0, 31.0)),
+      NoteVectors(Vector(300.0, 32.0), Vector(350.0, 32.0)),
+      NoteVectors(Vector(350.0, 32.5), Vector(400.0, 32.5))
     )
   }
 
@@ -248,14 +248,14 @@ class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
     val result: Seq[NoteVectors] = noteOptions.asNotesVectors
 
     result shouldBe Seq(
-      NoteVectors(Vector(0.0, 2.5), Vector(50.0, 2.5)),
-      NoteVectors(Vector(50.0, 3.5), Vector(100.0, 3.5)),
-      NoteVectors(Vector(100.0, 4.0), Vector(150.0, 4.0)),
-      NoteVectors(Vector(150.0, 5.0), Vector(200.0, 5.0)),
-      NoteVectors(Vector(200.0, 6.0), Vector(250.0, 6.0)),
-      NoteVectors(Vector(250.0, 7.0), Vector(300.0, 7.0)),
-      NoteVectors(Vector(300.0, 7.5), Vector(350.0, 7.5)),
-      NoteVectors(Vector(350.0, 8.5), Vector(400.0, 8.5))
+      NoteVectors(Vector(0.0, 26.5), Vector(50.0, 26.5)),
+      NoteVectors(Vector(50.0, 27.5), Vector(100.0, 27.5)),
+      NoteVectors(Vector(100.0, 28.0), Vector(150.0, 28.0)),
+      NoteVectors(Vector(150.0, 29.0), Vector(200.0, 29.0)),
+      NoteVectors(Vector(200.0, 30.0), Vector(250.0, 30.0)),
+      NoteVectors(Vector(250.0, 31.0), Vector(300.0, 31.0)),
+      NoteVectors(Vector(300.0, 31.5), Vector(350.0, 31.5)),
+      NoteVectors(Vector(350.0, 32.5), Vector(400.0, 32.5))
     )
   }
 
@@ -276,12 +276,12 @@ class NotesAsVectorsTest extends AnyFlatSpec with Matchers {
     val result: Seq[NoteVectors] = noteOptions.asNotesVectors
 
     result shouldBe Seq(
-      NoteVectors(Vector(0.0, 6.0), Vector(100.0, 6.0)),
-      NoteVectors(Vector(0.0, 2.0), Vector(100.0, 2.0)),
-      NoteVectors(Vector(0.0, 3.5), Vector(100.0, 3.5)),
+      NoteVectors(Vector(0.0, 30.0), Vector(100.0, 30.0)),
+      NoteVectors(Vector(0.0, 26.0), Vector(100.0, 26.0)),
+      NoteVectors(Vector(0.0, 27.5), Vector(100.0, 27.5)),
       NoteVectors(Vector(100.0, -7.5), Vector(200.0, -7.5)),
-      NoteVectors(Vector(200.0, 3.5), Vector(300.0, 3.5)),
-      NoteVectors(Vector(200.0, 1.0), Vector(300.0, 1.0)),
+      NoteVectors(Vector(200.0, 27.5), Vector(300.0, 27.5)),
+      NoteVectors(Vector(200.0, 25.0), Vector(300.0, 25.0)),
       NoteVectors(Vector(300.0, -7.5), Vector(400.0, -7.5))
     )
   }

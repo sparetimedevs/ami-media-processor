@@ -51,7 +51,7 @@ private[graphic] def vectorComponentXAtEnd(noteOption: NoteOption, currentX: Dou
   currentX + (noteOption.noteType.value * 400)
 
 private[graphic] def vectorComponentY(pitch: Pitch): Double =
-  vectorComponentY(pitch.step) + ((pitch.octave.toDouble - 4) * 6)
+  vectorComponentY(pitch.step) + (pitch.octave.toDouble * 6)
 
 private[graphic] def vectorComponentY(step: Step): Double =
   step match {

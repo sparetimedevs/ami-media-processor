@@ -147,7 +147,7 @@
       <note default-x="636.53" default-y="-25.00">
         <pitch>
           <step>A</step>
-          <octave>4</octave>
+          <octave>5</octave>
           </pitch>
         <duration>1</duration>
         <voice>1</voice>
@@ -159,7 +159,7 @@
         <pitch>
           <step>B</step>
           <alter>-1</alter>
-          <octave>4</octave>
+          <octave>5</octave>
           </pitch>
         <duration>1</duration>
         <voice>1</voice>
