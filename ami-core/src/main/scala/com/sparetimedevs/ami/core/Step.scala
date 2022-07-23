@@ -17,4 +17,4 @@
 package com.sparetimedevs.ami.core
 
 enum Step:
-  case A, BFlat, B, C, D, EFlat, E, F, G
+  case AFlat, A, ASharp, BFlat, B, C, CSharp, DFlat, D, DSharp, EFlat, E, F, FSharp, GFlat, G, GSharp

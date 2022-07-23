@@ -55,13 +55,18 @@ private[graphic] def vectorComponentY(pitch: Pitch): Double =
 
 private[graphic] def vectorComponentY(step: Step): Double =
   step match {
-    case Step.A     => 1
-    case Step.BFlat => 1.5
-    case Step.B     => 2
-    case Step.C     => 2.5
-    case Step.D     => 3.5
-    case Step.EFlat => 4
-    case Step.E     => 4.5
-    case Step.F     => 5
-    case Step.G     => 6
+    case Step.AFlat               => 0.5
+    case Step.A                   => 1
+    case Step.ASharp | Step.BFlat => 1.5
+    case Step.B                   => 2
+    case Step.C                   => 2.5
+    case Step.CSharp              => 3 // TODO merge and check test results.
+    case Step.DFlat               => 3
+    case Step.D                   => 3.5
+    case Step.DSharp | Step.EFlat => 4
+    case Step.E                   => 4.5
+    case Step.F                   => 5
+    case Step.FSharp | Step.GFlat => 5.5
+    case Step.G                   => 6
+    case Step.GSharp              => 6.5
   }
